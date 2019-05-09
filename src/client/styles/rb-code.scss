@@ -1,8 +1,20 @@
-/******************
- * RB-CODE STYLES
- ******************/
+/*****************
+ * RB-CODE STYLES (TODO)
+ *****************/
 @import 'sass/functions.scss';
+@import 'sass/palette.scss';
 
-/* The Component
- ****************/
+/* Layout
+ *********/
+@import 'layout/host.scss';
+@import 'layout/code.scss';
+@import 'layout/responsive.scss';
 
+/* CSS Style Variables
+ **********************/
+@import 'variables/common.scss';
+@import 'sass/css-vars.scss';
+
+/* Styles
+ *********/
+@import 'style/common.scss';

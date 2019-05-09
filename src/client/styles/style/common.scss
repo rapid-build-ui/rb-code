@@ -1,0 +1,14 @@
+/********************************************
+ * COMMON STYLES (for light and dark themes)
+ ********************************************/
+@mixin setCommonStyles() {
+	// Kinds
+	// $kinds: default, danger, info, neutral, success, warning;
+	// @each $kind in $kinds {
+	// 	.#{$kind} {
+	// 		background-color: mapGet($vars, common, #{$kind}-bg);
+	// 	}
+	// }
+}
+
+@include setCommonStyles();

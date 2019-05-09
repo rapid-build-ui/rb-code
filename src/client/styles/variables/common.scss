@@ -1,0 +1,32 @@
+/*****************************************
+ * COMMON CSS VARIABLES
+ * Applies to both light and dark themes.
+ *****************************************/
+$commonCssVars: (
+	// Background Colors
+	// default-bg: mapGet($palette, transparent),
+	// default-bg: mapGet($palette, xBlueLight),
+	// danger-bg:  mapGet($palette, xRedLight),
+	// info-bg:    mapGet($palette, xTurquoiseLight),
+	// neutral-bg: mapGet($palette, xGreyLight),
+	// success-bg: mapGet($palette, xGreenLight),
+	// warning-bg: mapGet($palette, xYellowLight),
+
+	// Border Colors
+	// default-border-color: mapGet($palette, xGreyLight),
+	// default-border-color: mapGet($palette, blueLight),
+	// danger-border-color:  mapGet($palette, redLight),
+	// info-border-color:    mapGet($palette, turquoiseLight),
+	// neutral-border-color: mapGet($palette, greyLight),
+	// success-border-color: mapGet($palette, greenLight),
+	// warning-border-color: mapGet($palette, yellowLight),
+
+	// Text Colors
+	// default-text-color: mapGet($palette, slateGrey),
+	// default-text-color: mapGet($palette, blue),
+	// danger-text-color:  mapGet($palette, red),
+	// info-text-color:    mapGet($palette, turquoise),
+	// neutral-text-color: mapGet($palette, grey),
+	// success-text-color: mapGet($palette, green),
+	// warning-text-color: mapGet($palette, yellow)
+);
