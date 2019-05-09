@@ -1,0 +1,7 @@
+/********************
+ * CSS VARIABLES MAP
+ ********************/
+$component: 'rb-code';
+$vars: (
+	common: getCssVarsMap($component, $commonCssVars)
+);
