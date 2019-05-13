@@ -1,0 +1,53 @@
+/**********
+ * OPTIONS
+ **********/
+// Readonly
+.rb-code.readonly {
+	.CodeMirror {
+		&::before {
+			position: absolute;
+			top: -2px;
+			right: 4px;
+			z-index: 2;
+			opacity: 0;
+			letter-spacing: .1px;
+			transition: opacity .8s;
+			content: 'readonly';
+		}
+		&:hover::before {
+			opacity: .6;
+		};
+	}
+}
+
+// Placeholder
+.CodeMirror-placeholder {
+	filter: brightness(50%);
+}
+
+// Heights
+.rb-code {
+	@mixin editorHeight($ht) {
+		$ht: #{$ht}#{'px'};
+		.CodeMirror { min-height: $ht; }
+		&.scroll .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
+	}
+	&.teeny-height      { @include editorHeight(44);  }
+	&.tiny-height       { @include editorHeight(62);  }
+	&.mini-height       { @include editorHeight(80);  }
+	&.short-height      { @include editorHeight(98);  }
+	&.tall-height       { @include editorHeight(134); }
+	&.xtall-height      { @include editorHeight(152); }
+	&.xxtall-height     { @include editorHeight(170); }
+	&.xxxtall-height    { @include editorHeight(187); }
+	&.xxxxtall-height   { @include editorHeight(206); }
+	&.xxxxxtall-height  { @include editorHeight(224); }
+	&.xxxxxxtall-height { @include editorHeight(242); }
+	&.giant-height      { @include editorHeight(332); }
+	&.xgiant-height     { @include editorHeight(350); }
+	&.xxgiant-height    { @include editorHeight(368); }
+	&.xxxgiant-height   { @include editorHeight(404); }
+	&.jumbo-height      { @include editorHeight(493); }
+	&.xjumbo-height     { @include editorHeight(584); }
+	&.xxjumbo-height    { @include editorHeight(656); }
+}

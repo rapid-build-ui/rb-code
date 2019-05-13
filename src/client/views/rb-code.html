@@ -1,7 +1,15 @@
-<div class="
-	code
-	${props.kind}">
-	<slot></slot>
+<div class="rb-code ${props.kind}">
+	<section class="titlebar">
+		${props.caption ? html`<h3 class="caption">${props.caption}</h3>` : null}
+		<div class="actions">
+			<rb-popover
+				inherit-color
+				icon-kind="copy">
+				Copied! <rb-icon kind="thumbs-up"></rb-icon>
+			</rb-popover>
+		</div>
+	</section>
+	<textarea tabindex="-1"></textarea>
 </div>
 
 <link rel="stylesheet" href="../styles/rb-code.css">

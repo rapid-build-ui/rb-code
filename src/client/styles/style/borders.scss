@@ -1,0 +1,16 @@
+/**********
+ * BORDERS
+ **********/
+.rb-code {
+	$r: 5px;
+	.titlebar {
+		border-radius: $r $r 0 0;
+		~ .CodeMirror {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+	.CodeMirror {
+		border-radius: $r;
+	}
+}

@@ -1,0 +1,30 @@
+/********
+ * FONTS
+ ********/
+.rb-code {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	.titlebar,
+	&.readonly .CodeMirror::before {
+		font-family: mapGet($fonts, default);
+	}
+	.titlebar {
+		h3 {
+			font-size: 13px;
+			font-weight: 700;
+		}
+		.actions {
+			font-size: 14.5px;
+		}
+	}
+	&.readonly .CodeMirror::before {
+		font-size: 12px;
+		font-weight: normal;
+	}
+	.CodeMirror {
+		font-size: 11.5px;
+		font-weight: 700;
+		font-family: mapGet($fonts, monospaced);
+	}
+}

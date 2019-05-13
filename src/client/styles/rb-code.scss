@@ -1,13 +1,20 @@
 /*****************
- * RB-CODE STYLES (TODO)
+ * RB-CODE STYLES
  *****************/
 @import 'sass/functions.scss';
+@import 'sass/fonts.scss';
 @import 'sass/palette.scss';
 
 /* Layout
  *********/
 @import 'layout/host.scss';
 @import 'layout/code.scss';
+@import 'layout/titlebar.scss';
+@import 'layout/caption.scss';
+@import 'layout/actions.scss';
+@import 'layout/scrollbar.scss';
+@import 'layout/textarea.scss'; // hidden textarea
+@import 'layout/options.scss';
 @import 'layout/responsive.scss';
 
 /* CSS Style Variables
@@ -18,3 +25,5 @@
 /* Styles
  *********/
 @import 'style/common.scss';
+@import 'style/borders.scss';
+@import 'style/fonts.scss';
