@@ -5,6 +5,11 @@
 @import 'sass/fonts.scss';
 @import 'sass/palette.scss';
 
+/* CodeMirror & Themes
+ **********************/
+@import '../node_modules/codemirror/lib/codemirror';
+@import '../node_modules/codemirror-one-dark-theme/one-dark';
+
 /* Layout
  *********/
 @import 'layout/host.scss';
@@ -12,8 +17,9 @@
 @import 'layout/titlebar.scss';
 @import 'layout/caption.scss';
 @import 'layout/actions.scss';
-@import 'layout/scrollbar.scss';
 @import 'layout/textarea.scss'; // hidden textarea
+@import 'layout/editor.scss';
+@import 'layout/scrollbar.scss';
 @import 'layout/options.scss';
 @import 'layout/responsive.scss';
 

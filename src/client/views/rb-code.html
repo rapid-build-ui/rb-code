@@ -1,4 +1,11 @@
-<div class="rb-code ${props.kind}">
+<div
+	class="
+		rb-code
+		${props.kind}
+		${props.readonly ? 'readonly' : ''}
+		${props.scrollable ? 'scrollable' : ''}
+		${props.height !== 'auto' ? `${props.height}-height` : ''}
+	">
 	<section class="titlebar">
 		${props.caption ? html`<h3 class="caption">${props.caption}</h3>` : null}
 		<div class="actions">

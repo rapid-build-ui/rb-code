@@ -30,7 +30,7 @@
 	@mixin editorHeight($ht) {
 		$ht: #{$ht}#{'px'};
 		.CodeMirror { min-height: $ht; }
-		&.scroll .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
+		&.scrollable .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
 	}
 	&.teeny-height      { @include editorHeight(44);  }
 	&.tiny-height       { @include editorHeight(62);  }

@@ -33,6 +33,16 @@
     "@rapid-build-ui/rb-base" "^0.0.9"
     "@rapid-build-ui/rb-button" "^0.0.16"
 
+codemirror-one-dark-theme@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/codemirror-one-dark-theme/-/codemirror-one-dark-theme-1.1.1.tgz#e7f2b9e57e9945bed1720c61aa953a95ab96715c"
+  integrity sha512-SuGz+mjIhWZcU59PQT1KQL8YDdCZOB7zWyPSKC9T8KCjiFCsNaRnaOpI9LDamHUx8X+a7tEfiogemx6L/WDZCg==
+
+codemirror@^5.46.0:
+  version "5.46.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.46.0.tgz#be3591572f88911e0105a007c324856a9ece0fb7"
+  integrity sha512-3QpMge0vg4QEhHW3hBAtCipJEWjTJrqLLXdIaWptJOblf1vHFeXLNtFhPai/uX2lnFCehWNk4yOdaMR853Z02w==
+
 lit-html@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.0.0.tgz#3dc3781a8ca68a9b5c2ff2a61e263662b9b2267b"
