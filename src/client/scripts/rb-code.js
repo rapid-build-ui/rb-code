@@ -16,17 +16,14 @@ export class RbCode extends RbBase() {
 		super.disconnectedCallback && super.disconnectedCallback();
 		this.destroyEditor();
 	}
-	async viewReady() { // :void
+	viewReady() { // :void
 		super.viewReady && super.viewReady();
 		Object.assign(this.rb.elms, {
-			textarea: this.shadowRoot.querySelector('textarea'),
+			eStyles:  this.shadowRoot.getElementById('editor'),
+			eTheme:   this.shadowRoot.getElementById('theme'),
+			textarea: this.shadowRoot.querySelector('textarea')
 		});
 		this.setTextareaValue();
-		this._mode = this.mode;
-		await Editor.load();
-		// console.log('view ready');
-		await Editor.loadMode(this._mode);
-		this.updateCaption();
 		this.initEditor();
 	}
 
@@ -72,6 +69,13 @@ export class RbCode extends RbBase() {
 		if (!this.editor) return;
 		this.editor.toTextArea();
 	}
+	async loadEditor() { // :void
+		this._mode = this.mode;
+		await Editor.loadPrereqs(this.rb.elms.eStyles);
+		await Editor.loadMode(this._mode);
+		await Editor.loadTheme(this.rb.elms.eTheme, this.theme);
+		this.updateCaption();
+	}
 	setTextareaValue() { // :void (hidden textarea value)
 		this.rb.elms.textarea.value = this.innerHTML.trim();
 	}
@@ -85,7 +89,10 @@ export class RbCode extends RbBase() {
 
 	/* Editor
 	 *********/
-	initEditor() { // :void
+	async initEditor() { // :void
+		await this.loadEditor();
+		if (!this.rb.elms.textarea) return; // JIC
+		// console.log(this.rb.elms.textarea);
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
 			indentUnit: 4, // without, smartIndent uses 2 spaces
 			indentWithTabs: true,

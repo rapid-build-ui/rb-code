@@ -1,8 +1,9 @@
 /****************
  * EDITOR LOADER
  ****************/
-import Type  from '../../rb-base/scripts/public/services/type.js';
-import Modes from './modes.js';
+import Type   from '../../rb-base/scripts/public/services/type.js';
+import Modes  from './modes.js';
+import Themes from './themes.js';
 
 // Private
 const ePath = '../../../codemirror'; // relative to this file
@@ -15,15 +16,15 @@ const ePaths = {
 }
 const Help = {
 	exeJS(js) { // :void
-		new Function(js).call(window); // similar to eval()
+		new Function(js).call(window); // similar to but safer eval()
 		// console.log('execute js');
 	},
-	async fetch(_path) { // :js<string>
-		const url      = new URL(_path, ePaths.baseUrl);
+	async fetch(_path, baseUrl = ePaths.baseUrl) { // :string
+		const url      = new URL(_path, baseUrl);
 		const response = await fetch(url);
-		const js       = await response.text(); // :string
+		const string   = await response.text(); // :string
 		// console.log('fetch file');
-		return js;
+		return string;
 	},
 	async fetchAndExecute(_path) { // :void
 		const js = await this.fetch(_path);
@@ -40,20 +41,47 @@ const Help = {
 		if (Type.is.array(deps)) await Help.loadModeDeps(deps);
 		if (!_path) return;
 		await Help.fetchAndExecute(`${ePaths.modes}/${_path}`);
+	},
+	async loadStyles(styleElm, theme) { // :void (populates style elms in view)
+		// StyleCache[theme]
+		// 	? console.log('cached:', theme)
+		// 	: console.log('requested:', theme);
+		if (StyleCache[theme]) {
+			styleElm.textContent = StyleCache[theme];
+		} else {
+			const css = await this.fetch(Themes[theme]);
+			StyleCache[theme]    = css;
+			styleElm.textContent = css;
+		}
+		const populated = theme === 'basic' ? '' : theme; // boolean or string attr
+		styleElm.setAttribute('populated', populated);
 	}
-}
+};
+
+/* Style Cache
+ **************/
+const StyleCache = {};
 
 /* Public
  *********/
 const Editor = {
-	async load() { // :void
-		if (window.CodeMirror) return;
-		await Help.fetchAndExecute(`${ePaths.lib}/codemirror.js`);
+	async loadPrereqs(styleElm) { // :void
+		if (!window.CodeMirror)
+			await Help.fetchAndExecute(`${ePaths.lib}/codemirror.js`);
+		if (!styleElm.hasAttribute('populated'))
+			await Help.loadStyles(styleElm, 'basic');
 	},
 	async loadMode(mode) { // :void (load mode deps then mode)
 		await Help.loadMode(mode.mode);
+	},
+	async loadTheme(styleElm, theme) { // :void
+		theme = theme.toLowerCase();
+		if (styleElm.getAttribute('populated') === theme) return;
+		styleElm.textContent = null;   // clear existing styles
+		if (theme === 'basic') return; // already loaded in loadEditorStyles()
+		await Help.loadStyles(styleElm, theme);
 	}
-}
+};
 
 /* Export it!
  *************/
