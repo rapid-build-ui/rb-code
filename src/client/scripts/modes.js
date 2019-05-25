@@ -1,42 +1,34 @@
-/*********************************************
+/***********************************************
  * CODEMIRROR MODES/LANGUAGES
- * ------------------------------------------
- * root keys: are ids
- * title:     for component caption
- * config:    for editor instance mode option
- * mode:      for loading
- *********************************************/
-export default {
+ * --------------------------------------------
+ * root keys = id
+ * title  = component caption
+ * config = editor instance mode option
+ * load   = loading info (dynamically add path
+ *			based on load.name, ex: css/css.js)
+ ***********************************************/
+import Paths from './paths.js';
+
+/* Modes
+ ********/
+const Modes = {
 	css: {
 		title: 'css',
-		config: {
-			name: 'css'
-		},
-		mode: {
-			name: 'css',
-			path: 'css/css.js'
-		}
+		config: { name: 'css' },
+		load: { name: 'css' }
 	},
 	html: {
 		title: 'html',
-		config: {
-			name: 'htmlmixed'
-		},
-		mode: {
+		config: { name: 'htmlmixed' },
+		load: {
 			name: 'htmlmixed',
-			path: 'htmlmixed/htmlmixed.js',
 			deps: ['xml','js','css']
 		}
 	},
 	js: {
 		title: 'js',
-		config: {
-			name: 'javascript'
-		},
-		mode: {
-			name: 'javascript',
-			path: 'javascript/javascript.js'
-		}
+		config: { name: 'javascript' },
+		load: { name: 'javascript' }
 	},
 	json: {
 		title: 'json',
@@ -44,58 +36,45 @@ export default {
 			name: 'javascript',
 			json: true
 		},
-		mode: {
-			name: 'javascript',
-			path: 'javascript/javascript.js'
-		}
+		load: { name: 'javascript' }
 	},
 	less: {
 		title: 'less',
-		config: {
-			name: 'text/x-less'
-		},
-		mode: {
-			name: 'css',
-			path: 'css/css.js'
-		}
+		config: { name: 'text/x-less' },
+		load: { name: 'css' }
 	},
 	scss: {
 		title: 'scss',
-		config: {
-			name: 'text/x-scss'
-		},
-		mode: {
-			name: 'css',
-			path: 'css/css.js'
-		}
+		config: { name: 'text/x-scss' },
+		load: { name: 'css' }
 	},
 	shell: {
 		title: 'shell',
-		config: {
-			name: 'shell'
-		},
-		mode: {
-			name: 'shell',
-			path: 'shell/shell.js'
-		}
+		config: { name: 'shell' },
+		load: { name: 'shell' }
 	},
 	text: {
 		title: 'text',
-		config: {
-			name: 'text/plain'
-		},
-		mode: {
-			name: 'null'
-		}
+		config: { name: 'text/plain' },
+		load: { name: 'text' }
 	},
 	xml: {
 		title: 'xml',
-		config: {
-			name: 'xml'
-		},
-		mode: {
-			name: 'xml',
-			path: 'xml/xml.js'
-		}
+		config: { name: 'xml' },
+		load: { name: 'xml' }
 	}
 };
+
+/* Populate Load Path
+ *********************/
+(() => {
+	for (const [id, mode] of Object.entries(Modes)) {
+		if (id === 'text') continue; // codemirror's default mode (nothing to load)
+		const { name } = mode.load;
+		mode.load.path = `${Paths.editor.modes}/${name}/${name}.js`;
+	}
+})();
+
+/* Export it!
+ *************/
+export default Modes;

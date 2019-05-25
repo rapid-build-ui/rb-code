@@ -6,6 +6,10 @@ import Modes  from './modes.js';
 import Paths  from './paths.js';
 import Themes from './themes.js';
 
+/* Style Cache
+ **************/
+const StyleCache = {};
+
 /* Helpers
  **********/
 const Help = {
@@ -13,33 +17,32 @@ const Help = {
 		new Function(js).call(window); // similar to but safer eval()
 		// console.log('execute js');
 	},
-	async fetch(_path, baseUrl = Paths.rbCode) { // :string
-		const url      = new URL(_path, baseUrl);
+	async fetch(path, baseUrl = Paths.rbCode) { // :string
+		const url      = new URL(path, baseUrl);
 		const response = await fetch(url);
 		const string   = await response.text(); // :string
 		// console.log('fetch file');
 		return string;
 	},
-	async fetchAndExecute(_path) { // :void
-		const js = await this.fetch(_path);
+	async fetchAndExecute(path) { // :void
+		const js = await this.fetch(path);
 		// console.log('fetch and execute');
 		this.exeJS(js);
 	},
 	async loadModeDeps(deps) { // :void (synchronously)
-		for (const dep of deps)
-			await this.loadMode(Modes[dep].mode);
+		for (const dep of deps) await this.loadMode(Modes[dep].load);
 	},
-	async loadMode(mode) { // :void (recursive if deps have deps)
-		if (window.CodeMirror.modes[mode.name]) return; // already loaded (only load once)
-		const { deps, path: _path } = mode;
+	async loadMode(mode) { // :void (load mode deps, recursion if deps have deps)
+		const { deps, name, path } = mode;
+		const _name = name === 'text' ? 'null' : name; // codemirror's default mode name is 'null'
+		// window.CodeMirror.modes[_name] ? console.log('cached mode:', name) : console.log('requested mode:', name);
+		if (window.CodeMirror.modes[_name]) return; // already loaded
 		if (Type.is.array(deps)) await Help.loadModeDeps(deps);
-		if (!_path) return;
-		await Help.fetchAndExecute(`${Paths.editor.modes}/${_path}`);
+		if (!path) return;
+		await Help.fetchAndExecute(path);
 	},
 	async loadStyles(styleElm, theme) { // :void (populates style elms in view)
-		// StyleCache[theme]
-		// 	? console.log('cached theme:', theme)
-		// 	: console.log('requested theme:', theme);
+		// StyleCache[theme] ? console.log('cached theme:', theme) : console.log('requested theme:', theme);
 		if (StyleCache[theme]) {
 			styleElm.textContent = StyleCache[theme];
 		} else {
@@ -51,10 +54,6 @@ const Help = {
 	}
 };
 
-/* Style Cache
- **************/
-const StyleCache = {};
-
 /* Public
  *********/
 const Editor = {
@@ -64,8 +63,8 @@ const Editor = {
 		if (!styleElm.hasAttribute('populated'))
 			await Help.loadStyles(styleElm, 'codemirror');
 	},
-	async loadMode(mode) { // :void (load mode deps then mode)
-		await Help.loadMode(mode.mode);
+	async loadMode(mode) { // :void
+		await Help.loadMode(mode.load);
 	},
 	async loadTheme(styleElm, theme) { // :void
 		theme = theme.toLowerCase();

@@ -76,14 +76,14 @@ let Themes = { // :{ theme: <string>path | null }
 	codemirror: `${Paths.editor.lib}/codemirror.css`
 };
 
-/* Populated and Sort
- *********************/
+/* Populate and Sort
+ ********************/
 (() => {
 	for (const theme of IncludedThemes)
 		Themes[theme] = `${Paths.editor.themes}/${theme}.css`;
 
-	for (const [theme, _path] of Object.entries(ExternalThemes))
-		Themes[theme] = `${Paths.node_modules}/${_path}`;
+	for (const [theme, path] of Object.entries(ExternalThemes))
+		Themes[theme] = `${Paths.node_modules}/${path}`;
 
 	Themes = Object.fromEntries(Object.entries(Themes).sort());
 })();
