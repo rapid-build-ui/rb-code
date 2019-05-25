@@ -72,7 +72,7 @@ const ExternalThemes = { // third party packages
 };
 
 let Themes = { // :{ theme: <string>path | null }
-	basic: `${Paths.rel}/${Paths.editor}/codemirror.css` // codemirror's required styles (we'll call it "basic")
+	codemirror: `${Paths.rel}/${Paths.editor}/codemirror.css` // codemirror's required styles
 };
 
 /* Populate Themes (add themes with css paths then sort them)

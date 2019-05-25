@@ -49,7 +49,11 @@ export class RbCode extends RbBase() {
 				deserialize: Converter.boolean
 			}),
 			theme: Object.assign({}, props.string, {
-				default: 'one-dark'
+				default: 'one-dark',
+				deserialize(val) { // :string
+					if (!Type.is.string(val)) return val;
+					return val.trim().toLowerCase();
+				}
 			})
 		};
 	}
@@ -102,7 +106,7 @@ export class RbCode extends RbBase() {
 			readOnly: this.readonly,
 			// smartIndent: true, // default
 			// tabSize: 4, // default
-			theme: this.theme,
+			theme: this.theme === 'codemirror' ? 'default' : this.theme,
 			viewportMargin: Infinity // monitor performance (maybe 50)
 		});
 		if (this.readonly) this.updateReadonlyOpts();

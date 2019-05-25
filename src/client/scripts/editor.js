@@ -53,8 +53,7 @@ const Help = {
 			StyleCache[theme]    = css;
 			styleElm.textContent = css;
 		}
-		const populated = theme === 'basic' ? '' : theme; // boolean or string attr
-		styleElm.setAttribute('populated', populated);
+		styleElm.setAttribute('populated', theme);
 	}
 };
 
@@ -69,7 +68,7 @@ const Editor = {
 		if (!window.CodeMirror)
 			await Help.fetchAndExecute(`${ePaths.lib}/codemirror.js`);
 		if (!styleElm.hasAttribute('populated'))
-			await Help.loadStyles(styleElm, 'basic');
+			await Help.loadStyles(styleElm, 'codemirror');
 	},
 	async loadMode(mode) { // :void (load mode deps then mode)
 		await Help.loadMode(mode.mode);
@@ -78,7 +77,7 @@ const Editor = {
 		theme = theme.toLowerCase();
 		if (styleElm.getAttribute('populated') === theme) return;
 		styleElm.textContent = null;   // clear existing styles
-		if (theme === 'basic') return; // already loaded in loadEditorStyles()
+		if (theme === 'codemirror') return; // already loaded in loadPrereqs()
 		await Help.loadStyles(styleElm, theme);
 	}
 };
