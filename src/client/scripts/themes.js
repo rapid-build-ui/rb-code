@@ -11,7 +11,6 @@ const CodemirrorThemes = [ // themes included with codemirror
 	'3024-day',
 	'3024-night',
 	'abcdef',
-	'ambiance-mobile',
 	'ambiance',
 	'base16-dark',
 	'base16-light',
