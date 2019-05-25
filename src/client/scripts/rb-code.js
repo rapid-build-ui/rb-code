@@ -45,8 +45,7 @@ export class RbCode extends RbBase() {
 				deserialize: Converter.valueless
 			}),
 			scrollable: Object.assign({}, props.boolean, {
-				default: true,
-				deserialize: Converter.boolean
+				deserialize: Converter.valueless
 			}),
 			theme: Object.assign({}, props.string, {
 				default: 'one-dark',
@@ -96,7 +95,6 @@ export class RbCode extends RbBase() {
 	async initEditor() { // :void
 		await this.loadEditor();
 		if (!this.rb.elms.textarea) return; // JIC
-		// console.log(this.rb.elms.textarea);
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
 			indentUnit: 4, // without, smartIndent uses 2 spaces
 			indentWithTabs: true,
