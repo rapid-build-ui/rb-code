@@ -35,14 +35,18 @@ const Help = {
 	async loadMode(mode) { // :void (load mode deps, recursion if deps have deps)
 		const { deps, name, path } = mode;
 		const _name = name === 'text' ? 'null' : name; // codemirror's default mode name is 'null'
-		// window.CodeMirror.modes[_name] ? console.log('cached mode:', name) : console.log('requested mode:', name);
-		if (window.CodeMirror.modes[_name]) return; // already loaded
+		// CodeMirror.modes[_name]
+		// 	? console.log('cached mode:', name)
+		// 	: console.log('requested mode:', name);
+		if (CodeMirror.modes[_name]) return; // already loaded
 		if (Type.is.array(deps)) await Help.loadModeDeps(deps);
 		if (!path) return;
 		await Help.fetchAndExecute(path);
 	},
 	async loadStyles(styleElm, theme) { // :void (populates style elms in view)
-		// StyleCache[theme] ? console.log('cached theme:', theme) : console.log('requested theme:', theme);
+		// StyleCache[theme]
+		// 	? console.log('cached theme:', theme)
+		// 	: console.log('requested theme:', theme);
 		if (StyleCache[theme]) {
 			styleElm.textContent = StyleCache[theme];
 		} else {
