@@ -1,5 +1,5 @@
 /*****************
- * Height Options (see options.scss)
+ * HEIGHT OPTIONS (see options.scss)
  *****************/
 export default [
 	'auto',

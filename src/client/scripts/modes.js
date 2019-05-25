@@ -1,5 +1,5 @@
 /*********************************************
- * CodeMirror Modes/Languages
+ * CODEMIRROR MODES/LANGUAGES
  * ------------------------------------------
  * root keys: are ids
  * title:     for component caption
@@ -7,16 +7,6 @@
  * mode:      for loading
  *********************************************/
 export default {
-	bash: {
-		title: 'bash',
-		config: {
-			name: 'shell'
-		},
-		mode: {
-			name: 'shell',
-			path: 'shell/shell.js'
-		}
-	},
 	css: {
 		title: 'css',
 		config: {

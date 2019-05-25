@@ -1,13 +1,11 @@
 /********************
- * CodeMirror Themes
+ * CODEMIRROR THEMES
  ********************/
-const Paths = { // path info
-	rel:    '../../..', // relative to this file
-	editor: 'codemirror/lib',
-	themes: 'codemirror/theme'
-};
+import Paths from './paths.js';
 
-const CodemirrorThemes = [ // themes included with codemirror
+/* Included Themes (with codemirror)
+ ******************/
+const IncludedThemes = [
 	'3024-day',
 	'3024-night',
 	'abcdef',
@@ -66,23 +64,29 @@ const CodemirrorThemes = [ // themes included with codemirror
 	'zenburn'
 ];
 
-const ExternalThemes = { // third party packages
+/* Third Party Themes
+ *********************/
+const ExternalThemes = {
 	'one-dark': `codemirror-one-dark-theme/one-dark.css`
 };
 
+/* Themes Export (init with codemirror's required styles)
+ ****************/
 let Themes = { // :{ theme: <string>path | null }
-	codemirror: `${Paths.rel}/${Paths.editor}/codemirror.css` // codemirror's required styles
+	codemirror: `${Paths.editor.lib}/codemirror.css`
 };
 
-/* Populate Themes (add themes with css paths then sort them)
- ******************/
-for (const theme of CodemirrorThemes)
-	Themes[theme] = `${Paths.rel}/${Paths.themes}/${theme}.css`;
+/* Populated and Sort
+ *********************/
+(() => {
+	for (const theme of IncludedThemes)
+		Themes[theme] = `${Paths.editor.themes}/${theme}.css`;
 
-for (const [theme, _path] of Object.entries(ExternalThemes))
-	Themes[theme] = `${Paths.rel}/${_path}`;
+	for (const [theme, _path] of Object.entries(ExternalThemes))
+		Themes[theme] = `${Paths.node_modules}/${_path}`;
 
-Themes = Object.fromEntries(Object.entries(Themes).sort());
+	Themes = Object.fromEntries(Object.entries(Themes).sort());
+})();
 
 /* Export it!
  *************/

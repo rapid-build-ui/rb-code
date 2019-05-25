@@ -3,23 +3,17 @@
  ****************/
 import Type   from '../../rb-base/scripts/public/services/type.js';
 import Modes  from './modes.js';
+import Paths  from './paths.js';
 import Themes from './themes.js';
 
-// Private
-const ePath = '../../../codemirror'; // relative to this file
-const ePaths = {
-	editor:  ePath,
-	baseUrl: import.meta.url,
-	addons:  `${ePath}/addon`,
-	lib:     `${ePath}/lib`,
-	modes:   `${ePath}/mode`
-}
+/* Helpers
+ **********/
 const Help = {
 	exeJS(js) { // :void
 		new Function(js).call(window); // similar to but safer eval()
 		// console.log('execute js');
 	},
-	async fetch(_path, baseUrl = ePaths.baseUrl) { // :string
+	async fetch(_path, baseUrl = Paths.rbCode) { // :string
 		const url      = new URL(_path, baseUrl);
 		const response = await fetch(url);
 		const string   = await response.text(); // :string
@@ -40,12 +34,12 @@ const Help = {
 		const { deps, path: _path } = mode;
 		if (Type.is.array(deps)) await Help.loadModeDeps(deps);
 		if (!_path) return;
-		await Help.fetchAndExecute(`${ePaths.modes}/${_path}`);
+		await Help.fetchAndExecute(`${Paths.editor.modes}/${_path}`);
 	},
 	async loadStyles(styleElm, theme) { // :void (populates style elms in view)
 		// StyleCache[theme]
-		// 	? console.log('cached:', theme)
-		// 	: console.log('requested:', theme);
+		// 	? console.log('cached theme:', theme)
+		// 	: console.log('requested theme:', theme);
 		if (StyleCache[theme]) {
 			styleElm.textContent = StyleCache[theme];
 		} else {
@@ -66,7 +60,7 @@ const StyleCache = {};
 const Editor = {
 	async loadPrereqs(styleElm) { // :void
 		if (!window.CodeMirror)
-			await Help.fetchAndExecute(`${ePaths.lib}/codemirror.js`);
+			await Help.fetchAndExecute(`${Paths.editor.lib}/codemirror.js`);
 		if (!styleElm.hasAttribute('populated'))
 			await Help.loadStyles(styleElm, 'codemirror');
 	},
