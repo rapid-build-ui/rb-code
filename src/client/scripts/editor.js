@@ -39,6 +39,7 @@ const Help = {
  **********/
 const Load = {
 	async addon(addon) { // :void
+		addon = addon.toLowerCase();
 		const path = Addons[addon];
 		if (!path) return;
 		// CACHE.addons[addon]
@@ -62,7 +63,11 @@ const Load = {
 	async modeDeps(deps) { // :void (synchronously)
 		for (const dep of deps) await Load.mode(Modes[dep].load);
 	},
-	async theme(styleElm, theme) { // :void (populates style elms in view)
+	async theme(styleElm, theme, isTheme = false) { // :void (populates style elms in view)
+		theme = theme.toLowerCase();
+		if (styleElm.getAttribute('populated') === theme) return;
+		if (isTheme && theme === 'codemirror') // already loaded in loadPrereqs()
+			return styleElm.textContent = null; // clear existing styles
 		// CACHE.themes[theme]
 		// 	? console.log('cached theme:', theme)
 		// 	: console.log('requested theme:', theme);
@@ -93,11 +98,7 @@ const Editor = {
 		await Load.mode(mode.load);
 	},
 	async loadTheme(styleElm, theme) { // :void
-		theme = theme.toLowerCase();
-		if (styleElm.getAttribute('populated') === theme) return;
-		styleElm.textContent = null;   // clear existing styles
-		if (theme === 'codemirror') return; // already loaded in loadPrereqs()
-		await Load.theme(styleElm, theme);
+		await Load.theme(styleElm, theme, true);
 	}
 };
 
