@@ -11,6 +11,7 @@ import Themes from './themes.js';
  ********/
 const CACHE = {
 	addons: {}, // { name: boolean }
+	modes:  {}, // { name: boolean }
 	themes: {}  // { name: css<string> }
 };
 
@@ -51,14 +52,14 @@ const Load = {
 	},
 	async mode(mode) { // :void (load mode deps, recursion if deps have deps)
 		const { deps, name, path } = mode;
-		const _name = name === 'text' ? 'null' : name; // codemirror's default mode name is 'null'
-		// CodeMirror.modes[_name]
+		// CACHE.modes[name]
 		// 	? console.log('cached mode:', name)
 		// 	: console.log('requested mode:', name);
-		if (CodeMirror.modes[_name]) return; // already loaded
+		if (CACHE.modes[name]) return;
 		if (Type.is.array(deps)) await Load.modeDeps(deps);
-		if (!path) return;
+		if (!path) return CACHE.modes[name] = true; // codemirror's default mode which is 'null'
 		await Help.fetchAndExecute(path);
+		CACHE.modes[name] = true;
 	},
 	async modeDeps(deps) { // :void (synchronously)
 		for (const dep of deps) await Load.mode(Modes[dep].load);
