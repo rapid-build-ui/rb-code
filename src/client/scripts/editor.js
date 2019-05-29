@@ -32,8 +32,13 @@ const Help = {
 		const js = await this.fetch(path);
 		// console.log('fetch and execute');
 		this.exeJS(js);
-	},
-	async loadAddon(addon) { // :void
+	}
+};
+
+/* Loaders
+ **********/
+const Load = {
+	async addon(addon) { // :void
 		const path = Addons[addon];
 		if (!path) return;
 		// CACHE.addons[addon]
@@ -43,28 +48,28 @@ const Help = {
 		await Help.fetchAndExecute(path);
 		CACHE.addons[addon] = true;
 	},
-	async loadModeDeps(deps) { // :void (synchronously)
-		for (const dep of deps) await this.loadMode(Modes[dep].load);
-	},
-	async loadMode(mode) { // :void (load mode deps, recursion if deps have deps)
+	async mode(mode) { // :void (load mode deps, recursion if deps have deps)
 		const { deps, name, path } = mode;
 		const _name = name === 'text' ? 'null' : name; // codemirror's default mode name is 'null'
 		// CodeMirror.modes[_name]
 		// 	? console.log('cached mode:', name)
 		// 	: console.log('requested mode:', name);
 		if (CodeMirror.modes[_name]) return; // already loaded
-		if (Type.is.array(deps)) await Help.loadModeDeps(deps);
+		if (Type.is.array(deps)) await Load.modeDeps(deps);
 		if (!path) return;
 		await Help.fetchAndExecute(path);
 	},
-	async loadStyles(styleElm, theme) { // :void (populates style elms in view)
+	async modeDeps(deps) { // :void (synchronously)
+		for (const dep of deps) await Load.mode(Modes[dep].load);
+	},
+	async theme(styleElm, theme) { // :void (populates style elms in view)
 		// CACHE.themes[theme]
 		// 	? console.log('cached theme:', theme)
 		// 	: console.log('requested theme:', theme);
 		if (CACHE.themes[theme]) {
 			styleElm.textContent = CACHE.themes[theme];
 		} else {
-			const css = await this.fetch(Themes[theme]);
+			const css = await Help.fetch(Themes[theme]);
 			CACHE.themes[theme]  = css;
 			styleElm.textContent = css;
 		}
@@ -79,20 +84,20 @@ const Editor = {
 		if (!window.CodeMirror)
 			await Help.fetchAndExecute(`${Paths.editor.lib}/codemirror.js`);
 		if (!styleElm.hasAttribute('populated'))
-			await Help.loadStyles(styleElm, 'codemirror');
-	},
-	async loadMode(mode) { // :void
-		await Help.loadMode(mode.load);
+			await Load.theme(styleElm, 'codemirror');
 	},
 	async loadAddon(addon) { // :void
-		await Help.loadAddon(addon);
+		await Load.addon(addon);
+	},
+	async loadMode(mode) { // :void
+		await Load.mode(mode.load);
 	},
 	async loadTheme(styleElm, theme) { // :void
 		theme = theme.toLowerCase();
 		if (styleElm.getAttribute('populated') === theme) return;
 		styleElm.textContent = null;   // clear existing styles
 		if (theme === 'codemirror') return; // already loaded in loadPrereqs()
-		await Help.loadStyles(styleElm, theme);
+		await Load.theme(styleElm, theme);
 	}
 };
 
