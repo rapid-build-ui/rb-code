@@ -4,6 +4,7 @@
 import { RbBase, props, html } from '../../rb-base/scripts/rb-base.js';
 import Type                    from '../../rb-base/scripts/public/services/type.js';
 import Converter               from '../../rb-base/scripts/public/props/converters.js';
+import View                    from '../../rb-base/scripts/public/view/directives.js';
 import Editor                  from './editor.js';
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
@@ -32,6 +33,7 @@ export class RbCode extends RbBase() {
 	static get props() { // :object
 		return {
 			caption: props.string,
+			placeholder: props.string,
 			height: Object.assign({}, props.string, {
 				default: 'tall'
 			}),
@@ -77,6 +79,7 @@ export class RbCode extends RbBase() {
 		await Editor.loadPrereqs(this.rb.elms.eStyles);
 		await Editor.loadMode(this._mode);
 		await Editor.loadTheme(this.rb.elms.eTheme, this.theme);
+		if (this.placeholder) await Editor.loadAddon('placeholder');
 		this.updateCaption();
 	}
 	setTextareaValue() { // :void (hidden textarea value)
@@ -109,7 +112,10 @@ export class RbCode extends RbBase() {
 		});
 		if (this.readonly) this.updateReadonlyOpts();
 		// console.log(this.editor);
+		// console.log(CodeMirror.modes);
+		// console.log(CodeMirror.defaults);
 		// console.log(this.editor.options.mode);
+		// console.log(this.editor.getOption('placeholder'));
 	}
 
 	/* Template

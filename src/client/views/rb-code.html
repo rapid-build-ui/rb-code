@@ -17,7 +17,9 @@
 			</rb-popover>
 		</div>
 	</section>
-	<textarea tabindex="-1"></textarea>
+	<textarea
+		tabindex="-1"
+		placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
 </div>
 
 <style id="editor"></style>
