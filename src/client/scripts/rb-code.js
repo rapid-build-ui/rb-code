@@ -9,17 +9,21 @@ import Editor                  from './editor.js';
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
 import '../../rb-popover/scripts/rb-popover.js';
+// true if phone or tablet (TODO: move to base and improve)
+const IS_MOBILE = !Type.is.undefined(window.orientation);
 
 export class RbCode extends RbBase() {
 	/* Lifecycle
 	 ************/
 	constructor() {
 		super();
-		this._editorEvents = {}; // populated in _addEditorEvents()
+		this._editorEvents = {}; // populated in _attachEditorEvents()
 	}
 	disconnectedCallback() { // :void
 		super.disconnectedCallback && super.disconnectedCallback();
-		this._destroyEditor();
+		if (!this.editor) return;
+		this.editor.off('change', this._editorEvents.change);
+		this.editor.toTextArea();
 	}
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
@@ -72,44 +76,39 @@ export class RbCode extends RbBase() {
 		this.__mode = Modes[mode] || Modes['text']; // :object
 	}
 
-	/* Helpers
-	 **********/
-	_destroyEditor() { // :void
-		if (!this.editor) return;
-		this._removeEditorEvents();
-		this.editor.toTextArea();
+	/* Getter and Setter (methods)
+	 ********************/
+	_getCursorBlinkRate() { // :milliseconds<int> (-1 hides the cursor)
+		return this.readonly ? -1 : CodeMirror.defaults.cursorBlinkRate;
 	}
+	_getReadonly() { // :boolean | string
+		// if mobile then 'nocursor' (prevents keyboard from popping up)
+		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
+	}
+	_setCaption() { // :void
+		if (this.caption) return;
+		this.caption = this._mode.title || '';
+	}
+	_setTextareaValue() { // :void (hidden textarea value)
+		this.rb.elms.textarea.value = this.innerHTML.trim();
+	}
+
+	/* Loaders
+	 **********/
 	async _loadEditor() { // :void
 		this._mode = this.mode;
 		await Editor.loadPrereqs(this.rb.elms.eStyles);
 		await Editor.loadMode(this._mode);
 		await Editor.loadTheme(this.rb.elms.eTheme, this.theme);
 		if (this.placeholder) await Editor.loadAddon('placeholder');
-		this._updateCaption();
-	}
-	_setTextareaValue() { // :void (hidden textarea value)
-		this.rb.elms.textarea.value = this.innerHTML.trim();
-	}
-	_updateCaption() { // :void
-		if (this.caption) return;
-		this.caption = this._mode.title || '';
-	}
-	_updateReadonlyOpts() { // :void
-		this.editor.setOption('cursorBlinkRate', -1); // hides cursor
 	}
 
 	/* Event Management
 	 *******************/
-	_addEditorEvents() { // :void
+	_attachEditorEvents() { // :void
 		this._editorEvents.change = this._onchange.bind(this);
 		this.editor.on('change', this._editorEvents.change);
 	}
-	_removeEditorEvents() { // :void (called in _destroyEditor())
-		this.editor.off('change', this._editorEvents.change);
-	}
-
-	/* Event Handlers
-	 *****************/
 	_onchange(editor, change) { // :void
 		// console.log('EDITOR:', this.editor);
 		// console.log('CHANGE:', change);
@@ -122,26 +121,31 @@ export class RbCode extends RbBase() {
 	 *********/
 	async _initEditor() { // :void
 		await this._loadEditor();
+		this._setCaption();
 		if (!this.rb.elms.textarea) return; // JIC
+
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
-			indentUnit: 4, // without, smartIndent uses 2 spaces
+			indentUnit: 4, // uses 2 spaces without smartIndent
 			indentWithTabs: true,
 			lineNumbers: false,
 			lineWrapping: false,
 			mode: this._mode.config,
-			readOnly: this.readonly,
+			readOnly: this._getReadonly(),
+			cursorBlinkRate: this._getCursorBlinkRate(),
 			// smartIndent: true, // default
 			// tabSize: 4, // default
 			theme: this.theme === 'codemirror' ? 'default' : this.theme,
 			viewportMargin: Infinity // monitor performance (maybe 50)
 		});
-		if (this.readonly) this._updateReadonlyOpts();
-		this._addEditorEvents();
+
+		this._attachEditorEvents();
 		// console.log(this.editor);
 		// console.log(CodeMirror.modes);
 		// console.log(CodeMirror.defaults);
+		// console.log(CodeMirror.defaults.cursorBlinkRate);
 		// console.log(this.editor.options.mode);
-		// console.log(this.editor.getOption('placeholder'));
+		// console.log(this.editor.getOption('readOnly'));
+		// console.log(this.editor.getOption('cursorBlinkRate'));
 	}
 
 	/* Template
