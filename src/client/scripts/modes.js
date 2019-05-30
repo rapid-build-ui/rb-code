@@ -32,6 +32,11 @@ const Modes = {
 		config: { name: 'coffeescript' },
 		load: { name: 'coffeescript' }
 	},
+	cson: {
+		title: 'cson',
+		config: { name: 'coffeescript' },
+		load: { name: 'coffeescript' }
+	},
 	css: {
 		title: 'css',
 		config: { name: 'css' },
