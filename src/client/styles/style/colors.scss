@@ -1,16 +1,68 @@
 /*********
  * COLORS
  *********/
-// .titlebar {
-// 	border-bottom: 1px solid #e2e3e5;
-// }
-
-/* Editor
- *********/
+// Placeholder Option
 .rb-code {
 	.CodeMirror-placeholder {
+		opacity: .8;
 		color: mapGet($palette, silverChalice);
 	}
+}
+
+/* Light Themes (titlebar border and color)
+ ***************/
+.theme-default,
+.theme-3024-day,
+.theme-base16-light,
+.theme-duotone-light,
+.theme-eclipse,
+.theme-elegant,
+.theme-idea,
+.theme-mdn-like,
+.theme-neat,
+.theme-neo,
+.theme-paraiso-light,
+.theme-ssms,
+.theme-ttcn,
+.theme-xq-light,
+.theme-yeti {
+	.titlebar {
+		color: mapGet($palette, paynesGrey);
+		border-bottom: 1px solid mapGet($palette, gainsboro);
+	}
+}
+.theme-solarized {
+	.titlebar {
+		color: mapGet($palette, paynesGrey);
+		box-shadow: inset 7px 0 12px -6px mapGet($palette, black); // from solarized.css
+	}
+}
+
+/* Light Themes (titlebar bg)
+ ***************/
+.theme-default,
+.theme-eclipse,
+.theme-elegant,
+.theme-idea,
+.theme-mdn-like,
+.theme-neat,
+.theme-neo,
+.theme-ssms,
+.theme-ttcn,
+.theme-xq-light {
+	.titlebar { background: mapGet($palette, whiteSmoke); }
+}
+.theme-3024-day,
+.theme-base16-light,
+.theme-duotone-light,
+.theme-solarized {
+	.titlebar { background: mapGet($palette, antiFlashWhite); }
+}
+.theme-paraiso-light {
+	.titlebar { background: mapGet($palette, pastelGray); }
+}
+.theme-yeti {
+	.titlebar { background: mapGet($palette, lightGray); }
 }
 
 /* Dark Themes (titlebar border and color)
@@ -68,19 +120,16 @@
 .theme-zenburn {
 	.titlebar { background: mapGet($palette, blackOlive); }
 }
-
 .theme-lucario,
 .theme-oceanic-next {
 	.titlebar { background: mapGet($palette, gunmetal); }
 }
-
 .theme-dracula,
 .theme-material,
 .theme-one-dark,
 .theme-nord {
 	.titlebar { background: mapGet($palette, darkGunmetal); }
 }
-
 .theme-bespin,
 .theme-darcula,
 .theme-gruvbox-dark,
@@ -96,14 +145,12 @@
 .theme-shadowfox {
 	.titlebar { background: mapGet($palette, raisinBlack); }
 }
-
 .theme-cobalt,
 .theme-erlang-dark,
 .theme-midnight,
 .theme-rubyblue {
 	.titlebar { background: mapGet($palette, maastrichtBlue); }
 }
-
 .theme-3024-night,
 .theme-abcdef,
 .theme-ambiance,
@@ -113,12 +160,10 @@
 .theme-yonce {
 	.titlebar { background: mapGet($palette, licorice); }
 }
-
 .theme-blackboard,
 .theme-night {
 	.titlebar { background: mapGet($palette, richBlack); }
 }
-
 .theme-colorforth,
 .theme-isotope,
 .theme-liquibyte,
