@@ -20,11 +20,6 @@
 	}
 }
 
-// Placeholder
-.CodeMirror-placeholder {
-	filter: brightness(50%);
-}
-
 // Heights
 .rb-code {
 	@mixin editorHeight($ht) {

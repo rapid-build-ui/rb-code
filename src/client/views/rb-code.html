@@ -2,13 +2,18 @@
 	class="
 		rb-code
 		${props.kind}
-		${props.theme}-theme
+		theme-${props.theme}
+		mode-${props.mode}
 		${props.readonly ? 'readonly' : ''}
 		${props.scrollable ? 'scrollable' : ''}
 		${props.height !== 'auto' ? `${props.height}-height` : ''}
 	">
 	<section class="titlebar">
-		${props.caption ? html`<h3 class="caption">${props.caption}</h3>` : null}
+		${props.caption ? html`
+			<h3 class="caption">
+				${props.caption}
+			</h3>
+		`: '' }
 		<div class="actions">
 			<rb-popover
 				inherit-color

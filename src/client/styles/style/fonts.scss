@@ -4,27 +4,86 @@
 .rb-code {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
 
-	.titlebar,
-	&.readonly .CodeMirror::before {
-		font-family: mapGet($fonts, default);
+.titlebar {
+	font-family: mapGet($fonts, default);
+	.caption {
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: .5px;
+		text-transform: uppercase;
 	}
-	.titlebar {
-		h3 {
-			font-size: 13px;
-			font-weight: 700;
-		}
-		.actions {
-			font-size: 14.5px;
-		}
+	.actions {
+		font-size: 14.5px;
 	}
+}
+
+/* Editor
+ *********/
+.rb-code {
 	&.readonly .CodeMirror::before {
 		font-size: 12px;
 		font-weight: normal;
+		font-family: mapGet($fonts, default);
 	}
 	.CodeMirror {
 		font-size: 11.5px;
-		font-weight: 700;
+		font-weight: 400;
 		font-family: mapGet($fonts, monospaced);
+	}
+	.CodeMirror-placeholder {
+		font-size: 13px;
+		font-weight: 400;
+		font-style: italic;
+		font-family: mapGet($fonts, default);
+	}
+}
+
+/* Themes
+ *********/
+.theme-3024-day:not(.mode-text),
+.theme-3024-night:not(.mode-text),
+.theme-abcdef:not(.mode-text),
+.theme-ambiance:not(.mode-text),
+.theme-base16-dark:not(.mode-text),
+.theme-base16-light:not(.mode-text),
+.theme-bespin,
+.theme-darcula,
+.theme-duotone-dark,
+.theme-duotone-light.mode-text,
+.theme-gruvbox-dark,
+.theme-hopscotch:not(.mode-text),
+.theme-icecoder,
+.theme-isotope:not(.mode-text),
+.theme-lesser-dark:not(.mode-text),
+.theme-liquibyte:not(.mode-text),
+.theme-lucario:not(.mode-text),
+.theme-mbo:not(.mode-text),
+.theme-mdn-like,
+.theme-midnight:not(.mode-text),
+.theme-monokai:not(.mode-text),
+.theme-night:not(.mode-text),
+.theme-nord:not(.mode-text),
+.theme-oceanic-next:not(.mode-text),
+.theme-one-dark,
+.theme-panda-syntax:not(.mode-text),
+.theme-paraiso-dark,
+.theme-paraiso-light:not(.mode-text),
+.theme-pastel-on-dark,
+.theme-railscasts:not(.mode-text),
+.theme-seti:not(.mode-text),
+.theme-shadowfox,
+.theme-solarized:not(.mode-text),
+.theme-the-matrix:not(.mode-text),
+.theme-tomorrow-night-bright:not(.mode-text),
+.theme-tomorrow-night-eighties:not(.mode-text),
+.theme-twilight:not(.mode-text),
+.theme-vibrant-ink:not(.mode-text),
+.theme-yeti,
+.theme-yonce:not(.mode-text),
+.theme-zenburn:not(.mode-text) {
+	.CodeMirror {
+		font-weight: 700;
 	}
 }

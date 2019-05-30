@@ -2,12 +2,10 @@
  * ACTIONS
  **********/
 .actions {
-	text-transform: none;
 	text-align: right;
 	> * {
 		position: relative;
 		top: 1px;
-		line-height: inherit;
 	}
 	rb-popover ~ rb-popover {
 		margin-left: 5px;
