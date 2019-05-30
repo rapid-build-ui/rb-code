@@ -17,17 +17,17 @@ const Modes = {
 		config: { name: 'text/x-csrc' },
 		load: { name: 'clike' }
 	},
-	// 'c++': { // TODO: ++ in key breaks dropdown
-	// 	title: 'c++',
-	// 	config: { name: 'text/x-c++src' },
-	// 	load: { name: 'clike' }
-	// },
+	'c++': {
+		title: 'c++',
+		config: { name: 'text/x-c++src' },
+		load: { name: 'clike' }
+	},
 	'c#': {
 		title: 'c#',
 		config: { name: 'text/x-csharp' },
 		load: { name: 'clike' }
 	},
-	coffee: {
+	coffeescript: {
 		title: 'coffee',
 		config: { name: 'coffeescript' },
 		load: { name: 'coffeescript' }
