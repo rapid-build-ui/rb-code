@@ -73,7 +73,7 @@ const ExternalThemes = {
 /* Themes Export (init with codemirror's required styles)
  ****************/
 let Themes = { // :{ theme: <string>path | null }
-	codemirror: `${Paths.editor.lib}/codemirror.css`
+	default: `${Paths.editor.lib}/codemirror.css`
 };
 
 /* Populate and Sort

@@ -64,10 +64,10 @@ const Load = {
 	async modeDeps(deps) { // :void (synchronously)
 		for (const dep of deps) await Load.mode(Modes[dep].load);
 	},
-	async theme(styleElm, theme, isTheme = false) { // :void (populates style elms in view)
+	async theme(styleElm, theme, isTheme=false) { // :void (populates style elms in view)
 		theme = theme.toLowerCase();
 		if (styleElm.getAttribute('populated') === theme) return;
-		if (isTheme && theme === 'codemirror') // already loaded in loadPrereqs()
+		if (isTheme && theme === 'default') // already loaded in loadPrereqs()
 			return styleElm.textContent = null; // clear existing styles
 		// CACHE.themes[theme]
 		// 	? console.log('cached theme:', theme)
@@ -90,7 +90,7 @@ const Editor = {
 		if (!window.CodeMirror)
 			await Help.fetchAndExecute(`${Paths.editor.lib}/codemirror.js`);
 		if (!styleElm.hasAttribute('populated'))
-			await Load.theme(styleElm, 'codemirror');
+			await Load.theme(styleElm, 'default');
 	},
 	async loadAddon(addon) { // :void
 		await Load.addon(addon);

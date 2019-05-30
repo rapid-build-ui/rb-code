@@ -58,7 +58,7 @@ export class RbCode extends RbBase() {
 				deserialize: Converter.valueless
 			}),
 			theme: Object.assign({}, props.string, {
-				default: 'one-dark',
+				default: 'default',
 				deserialize(val) { // :string
 					if (!Type.is.string(val)) return val;
 					return val.trim().toLowerCase();
@@ -134,7 +134,7 @@ export class RbCode extends RbBase() {
 			cursorBlinkRate: this._getCursorBlinkRate(),
 			// smartIndent: true, // default
 			// tabSize: 4, // default
-			theme: this.theme === 'codemirror' ? 'default' : this.theme,
+			theme: this.theme,
 			viewportMargin: Infinity // monitor performance (maybe 50)
 		});
 
