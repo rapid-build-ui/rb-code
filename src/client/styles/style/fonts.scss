@@ -22,10 +22,10 @@
 /* Editor
  *********/
 .rb-code {
-	&.readonly .CodeMirror::before {
+	&.readonly .titlebar::before {
 		font-size: 12px;
-		font-weight: normal;
-		font-family: mapGet($fonts, default);
+		font-weight: 700;
+		letter-spacing: .1px;
 	}
 	.CodeMirror {
 		font-size: 11.5px;

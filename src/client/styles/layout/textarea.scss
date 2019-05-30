@@ -2,7 +2,7 @@
  * HIDDEN TEXTAREA (trick to copy hidden textarea)
  ******************/
 textarea {
-	position: absolute; // relative to root
+	position: absolute; // to root
 	top: 0;
 	left: 0;
 	z-index: -1;

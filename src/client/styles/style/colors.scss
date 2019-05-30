@@ -1,11 +1,19 @@
 /*********
  * COLORS
  *********/
-// Placeholder Option
+// Options
 .rb-code {
 	.CodeMirror-placeholder {
 		opacity: .8;
 		color: mapGet($palette, silverChalice);
+	}
+	&.readonly {
+		.titlebar::before {
+			color: mapGet($palette, silverChalice);
+		}
+		&:hover .titlebar::before {
+			opacity: .8;
+		};
 	}
 }
 
