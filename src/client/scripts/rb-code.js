@@ -13,9 +13,13 @@ import '../../rb-popover/scripts/rb-popover.js';
 export class RbCode extends RbBase() {
 	/* Lifecycle
 	 ************/
+	constructor() {
+		super();
+		this._editorEvents = {}; // populated in _addEditorEvents()
+	}
 	disconnectedCallback() { // :void
 		super.disconnectedCallback && super.disconnectedCallback();
-		this.destroyEditor();
+		this._destroyEditor();
 	}
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
@@ -24,8 +28,8 @@ export class RbCode extends RbBase() {
 			eTheme:   this.shadowRoot.getElementById('theme'),
 			textarea: this.shadowRoot.querySelector('textarea')
 		});
-		this.setTextareaValue();
-		this.initEditor();
+		this._setTextareaValue();
+		this._initEditor();
 	}
 
 	/* Properties
@@ -70,33 +74,54 @@ export class RbCode extends RbBase() {
 
 	/* Helpers
 	 **********/
-	destroyEditor() { // :void
+	_destroyEditor() { // :void
 		if (!this.editor) return;
+		this._removeEditorEvents();
 		this.editor.toTextArea();
 	}
-	async loadEditor() { // :void
+	async _loadEditor() { // :void
 		this._mode = this.mode;
 		await Editor.loadPrereqs(this.rb.elms.eStyles);
 		await Editor.loadMode(this._mode);
 		await Editor.loadTheme(this.rb.elms.eTheme, this.theme);
 		if (this.placeholder) await Editor.loadAddon('placeholder');
-		this.updateCaption();
+		this._updateCaption();
 	}
-	setTextareaValue() { // :void (hidden textarea value)
+	_setTextareaValue() { // :void (hidden textarea value)
 		this.rb.elms.textarea.value = this.innerHTML.trim();
 	}
-	updateCaption() { // :void
+	_updateCaption() { // :void
 		if (this.caption) return;
 		this.caption = this._mode.title || '';
 	}
-	updateReadonlyOpts() { // :void
+	_updateReadonlyOpts() { // :void
 		this.editor.setOption('cursorBlinkRate', -1); // hides cursor
+	}
+
+	/* Event Management
+	 *******************/
+	_addEditorEvents() { // :void
+		this._editorEvents.change = this._onchange.bind(this);
+		this.editor.on('change', this._editorEvents.change);
+	}
+	_removeEditorEvents() { // :void (called in _destroyEditor())
+		this.editor.off('change', this._editorEvents.change);
+	}
+
+	/* Event Handlers
+	 *****************/
+	_onchange(editor, change) { // :void
+		// console.log('EDITOR:', this.editor);
+		// console.log('CHANGE:', change);
+		this.editor.save();
+		// console.log('TEXTAREA VALUE:');
+		// console.log(this.rb.elms.textarea.value);
 	}
 
 	/* Editor
 	 *********/
-	async initEditor() { // :void
-		await this.loadEditor();
+	async _initEditor() { // :void
+		await this._loadEditor();
 		if (!this.rb.elms.textarea) return; // JIC
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
 			indentUnit: 4, // without, smartIndent uses 2 spaces
@@ -110,7 +135,8 @@ export class RbCode extends RbBase() {
 			theme: this.theme === 'codemirror' ? 'default' : this.theme,
 			viewportMargin: Infinity // monitor performance (maybe 50)
 		});
-		if (this.readonly) this.updateReadonlyOpts();
+		if (this.readonly) this._updateReadonlyOpts();
+		this._addEditorEvents();
 		// console.log(this.editor);
 		// console.log(CodeMirror.modes);
 		// console.log(CodeMirror.defaults);
