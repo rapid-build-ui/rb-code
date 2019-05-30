@@ -1,16 +1,132 @@
 /*********
  * COLORS
  *********/
-.titlebar {
-	color: #999;
-	background: #20232a;
-	border-bottom: 1px solid #34373d;
-}
+// .titlebar {
+// 	border-bottom: 1px solid #e2e3e5;
+// }
 
 /* Editor
  *********/
 .rb-code {
 	.CodeMirror-placeholder {
-		color: #adadad;
+		color: mapGet($palette, silverChalice);
 	}
+}
+
+/* Dark Themes (titlebar border and color)
+ **************/
+.theme-3024-night,
+.theme-abcdef,
+.theme-ambiance,
+.theme-base16-dark,
+.theme-bespin,
+.theme-blackboard,
+.theme-cobalt,
+.theme-colorforth,
+.theme-darcula,
+.theme-dracula,
+.theme-duotone-dark,
+.theme-erlang-dark,
+.theme-gruvbox-dark,
+.theme-hopscotch,
+.theme-icecoder,
+.theme-isotope,
+.theme-lesser-dark,
+.theme-liquibyte,
+.theme-lucario,
+.theme-material,
+.theme-mbo,
+.theme-midnight,
+.theme-monokai,
+.theme-night,
+.theme-nord,
+.theme-oceanic-next,
+.theme-one-dark,
+.theme-panda-syntax,
+.theme-paraiso-dark,
+.theme-pastel-on-dark,
+.theme-railscasts,
+.theme-rubyblue,
+.theme-seti,
+.theme-shadowfox,
+.theme-the-matrix,
+.theme-tomorrow-night-bright,
+.theme-tomorrow-night-eighties,
+.theme-twilight,
+.theme-vibrant-ink,
+.theme-xq-dark,
+.theme-yonce,
+.theme-zenburn {
+	.titlebar {
+		color: mapGet($palette, spanishGray);
+		border-bottom: 1px solid mapGet($palette, onyx);
+	}
+}
+
+/* Dark Themes (titlebar bg)
+ **************/
+.theme-zenburn {
+	.titlebar { background: mapGet($palette, blackOlive); }
+}
+
+.theme-lucario,
+.theme-oceanic-next {
+	.titlebar { background: mapGet($palette, gunmetal); }
+}
+
+.theme-dracula,
+.theme-material,
+.theme-one-dark,
+.theme-nord {
+	.titlebar { background: mapGet($palette, darkGunmetal); }
+}
+
+.theme-bespin,
+.theme-darcula,
+.theme-gruvbox-dark,
+.theme-hopscotch,
+.theme-icecoder,
+.theme-lesser-dark,
+.theme-mbo,
+.theme-monokai,
+.theme-panda-syntax,
+.theme-paraiso-dark,
+.theme-pastel-on-dark,
+.theme-railscasts,
+.theme-shadowfox {
+	.titlebar { background: mapGet($palette, raisinBlack); }
+}
+
+.theme-cobalt,
+.theme-erlang-dark,
+.theme-midnight,
+.theme-rubyblue {
+	.titlebar { background: mapGet($palette, maastrichtBlue); }
+}
+
+.theme-3024-night,
+.theme-abcdef,
+.theme-ambiance,
+.theme-base16-dark,
+.theme-duotone-dark,
+.theme-seti,
+.theme-yonce {
+	.titlebar { background: mapGet($palette, licorice); }
+}
+
+.theme-blackboard,
+.theme-night {
+	.titlebar { background: mapGet($palette, richBlack); }
+}
+
+.theme-colorforth,
+.theme-isotope,
+.theme-liquibyte,
+.theme-the-matrix,
+.theme-tomorrow-night-bright,
+.theme-tomorrow-night-eighties,
+.theme-twilight,
+.theme-vibrant-ink,
+.theme-xq-dark {
+	.titlebar { background: mapGet($palette, black); }
 }
