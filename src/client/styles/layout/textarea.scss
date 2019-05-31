@@ -12,7 +12,7 @@ textarea {
 	padding: 0;
 	opacity: 0;
 	border-color: transparent; // can't copy with border none
-	display: block; // TODO: check if !important is needed
+	display: block !important; // !important because codemirror inlines display none
 }
 
 /* Testing (uncomment to see textarea)

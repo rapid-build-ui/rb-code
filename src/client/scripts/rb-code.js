@@ -28,11 +28,13 @@ export class RbCode extends RbBase() {
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
 		Object.assign(this.rb.elms, {
-			eStyles:  this.shadowRoot.getElementById('editor'),
-			eTheme:   this.shadowRoot.getElementById('theme'),
-			textarea: this.shadowRoot.querySelector('textarea')
+			copyPopover: this.shadowRoot.getElementById('copy'),
+			eStyles:     this.shadowRoot.getElementById('editor'),
+			eTheme:      this.shadowRoot.getElementById('theme'),
+			textarea:    this.shadowRoot.querySelector('textarea')
 		});
 		this._setTextareaValue();
+		this._attachEvents();
 		this._initEditor();
 	}
 
@@ -105,6 +107,20 @@ export class RbCode extends RbBase() {
 
 	/* Event Management
 	 *******************/
+	_attachEvents() { // :void
+		this.rb.elms.copyPopover.onclick = this._copy.bind(this);
+	}
+	_copy(evt) { // :void
+		const { textarea } = this.rb.elms;
+		textarea.select(); // must select first to copy, don't focus()
+		textarea.setSelectionRange(0, textarea.textLength); // iOS won't copy without this
+		document.execCommand('copy');
+		textarea.blur(); // removes selection
+		setTimeout(() => this.rb.elms.copyPopover.open = false, 1500);
+	}
+
+	/* Editor Events
+	 ****************/
 	_attachEditorEvents() { // :void
 		this._editorEvents.change = this._onchange.bind(this);
 		this.editor.on('change', this._editorEvents.change);
