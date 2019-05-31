@@ -45,10 +45,16 @@ export class RbCode extends RbBase() {
 			caption: props.string,
 			placeholder: props.string,
 			height: Object.assign({}, props.string, {
-				default: 'tall'
+				default: 'tall' // TODO: maybe change this
 			}),
 			kind: Object.assign({}, props.string, { // TODO: maybe
 				default: 'default'
+			}),
+			lineNumbers: Object.assign({}, props.boolean, {
+				deserialize: Converter.valueless
+			}),
+			lineWrapping: Object.assign({}, props.boolean, {
+				deserialize: Converter.valueless
 			}),
 			mode: Object.assign({}, props.string, {
 				default: 'text'
@@ -128,9 +134,9 @@ export class RbCode extends RbBase() {
 	_onchange(editor, change) { // :void
 		// console.log('EDITOR:', this.editor);
 		// console.log('CHANGE:', change);
-		this.editor.save();
 		// console.log('TEXTAREA VALUE:');
 		// console.log(this.rb.elms.textarea.value);
+		this.editor.save();
 	}
 
 	/* Editor
@@ -141,17 +147,17 @@ export class RbCode extends RbBase() {
 		if (!this.rb.elms.textarea) return; // JIC
 
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
-			indentUnit: 4, // uses 2 spaces without smartIndent
-			indentWithTabs: true,
-			lineNumbers: false,
-			lineWrapping: false,
-			mode: this._mode.config,
-			readOnly: this._getReadonly(),
+			indentUnit:      4, // uses 2 spaces without smartIndent
+			indentWithTabs:  true,
+			lineNumbers:     this.lineNumbers,
+			lineWrapping:    this.lineWrapping,
+			mode:            this._mode.config,
+			readOnly:        this._getReadonly(),
 			cursorBlinkRate: this._getCursorBlinkRate(),
-			// smartIndent: true, // default
-			// tabSize: 4, // default
-			theme: this.theme,
-			viewportMargin: Infinity // monitor performance (maybe 50)
+			theme:           this.theme,
+			viewportMargin:  Infinity, // monitor performance (maybe 50)
+			// smartIndent:     true, // default
+			// tabSize:         4, // default
 		});
 
 		this._attachEditorEvents();
