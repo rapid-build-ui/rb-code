@@ -17,6 +17,8 @@ export class RbCode extends RbBase() {
 	 ************/
 	constructor() {
 		super();
+		this._content = this.innerHTML; // store for textarea later
+		this._clearContent();
 		this._editorEvents = {}; // populated in _attachEditorEvents()
 	}
 	disconnectedCallback() { // :void
@@ -75,8 +77,25 @@ export class RbCode extends RbBase() {
 		};
 	}
 
+	/* Helpers
+	 **********/
+	_clearContent() { // :void
+		while (this.firstChild)
+			this.removeChild(this.firstChild);
+	}
+
 	/* Getters and Setters
 	 **********************/
+	get _content() { // :html<string>
+		// console.log('GET CONTENT');
+		// console.log(this.__content);
+		return this.__content;
+	}
+	set _content(content='') { // :void
+		// console.log('SET CONTENT');
+		// console.log(content);
+		this.__content = content.trim();
+	}
 	get _mode() { // :mode<object>
 		return this.__mode;
 	}
@@ -97,8 +116,8 @@ export class RbCode extends RbBase() {
 		if (this.caption) return;
 		this.caption = this._mode.title || '';
 	}
-	_setTextareaValue() { // :void (hidden textarea value)
-		this.rb.elms.textarea.value = this.innerHTML.trim();
+	_setTextareaValue() { // :void (hidden textarea)
+		this.rb.elms.textarea.value = this._content;
 	}
 
 	/* Loaders
@@ -131,7 +150,7 @@ export class RbCode extends RbBase() {
 		this._editorEvents.change = this._onchange.bind(this);
 		this.editor.on('change', this._editorEvents.change);
 	}
-	_onchange(editor, change) { // :void
+	_onchange(editor, change) { // :void (updates hidden textarea)
 		// console.log('EDITOR:', this.editor);
 		// console.log('CHANGE:', change);
 		// console.log('TEXTAREA VALUE:');
