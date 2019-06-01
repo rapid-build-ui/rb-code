@@ -1,0 +1,43 @@
+/********
+ * LABEL
+ ********/
+.label {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	margin: 0;
+	padding: 5px 13px 8px 8px;
+	min-height: 17.5px; // copy icon height, prevents shift shock
+	line-height: 16.5px;
+
+	/* Shared
+	 *********/
+	> * {
+		flex: auto; // grow items to container width
+	}
+
+	/* Label
+	 ********/
+	label {
+		align-self: flex-end;
+		margin: 0;
+		padding: 0;
+		word-break: break-all;
+		~ .actions {
+			margin-left: 8px;
+		}
+	}
+
+	/* Actions
+	 **********/
+	.actions {
+		text-align: right;
+		> * {
+			position: relative;
+			top: 1px;
+		}
+		rb-popover ~ rb-popover {
+			margin-left: 5px;
+		}
+	}
+}

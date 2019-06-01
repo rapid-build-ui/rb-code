@@ -2,22 +2,15 @@
  * COLORS
  *********/
 // Options
-.rb-code {
-	.CodeMirror-placeholder {
-		opacity: .8;
-		color: mapGet($palette, silverChalice);
-	}
-	&.readonly {
-		.titlebar::before {
-			color: mapGet($palette, silverChalice);
-		}
-		&:hover .titlebar::before {
-			opacity: .8;
-		};
-	}
+.rb-code .CodeMirror-placeholder {
+	opacity: .8;
+	color: mapGet($palette, silverChalice);
+}
+.rb-code.readonly .label::before {
+	color: mapGet($palette, silverChalice);
 }
 
-/* Light Themes (titlebar border and color)
+/* Light Themes (label border and color)
  ***************/
 .theme-default,
 .theme-3024-day,
@@ -34,19 +27,19 @@
 .theme-ttcn,
 .theme-xq-light,
 .theme-yeti {
-	.titlebar {
+	.label {
 		color: mapGet($palette, paynesGrey);
 		border-bottom: 1px solid mapGet($palette, gainsboro);
 	}
 }
 .theme-solarized {
-	.titlebar {
+	.label {
 		color: mapGet($palette, paynesGrey);
 		box-shadow: inset 7px 0 12px -6px mapGet($palette, black); // from solarized.css
 	}
 }
 
-/* Light Themes (titlebar bg)
+/* Light Themes (label bg)
  ***************/
 .theme-default,
 .theme-eclipse,
@@ -58,22 +51,22 @@
 .theme-ssms,
 .theme-ttcn,
 .theme-xq-light {
-	.titlebar { background: mapGet($palette, whiteSmoke); }
+	.label { background: mapGet($palette, whiteSmoke); }
 }
 .theme-3024-day,
 .theme-base16-light,
 .theme-duotone-light,
 .theme-solarized {
-	.titlebar { background: mapGet($palette, antiFlashWhite); }
+	.label { background: mapGet($palette, antiFlashWhite); }
 }
 .theme-paraiso-light {
-	.titlebar { background: mapGet($palette, pastelGray); }
+	.label { background: mapGet($palette, pastelGray); }
 }
 .theme-yeti {
-	.titlebar { background: mapGet($palette, lightGray); }
+	.label { background: mapGet($palette, lightGray); }
 }
 
-/* Dark Themes (titlebar border and color)
+/* Dark Themes (label border and color)
  **************/
 .theme-3024-night,
 .theme-abcdef,
@@ -117,26 +110,26 @@
 .theme-xq-dark,
 .theme-yonce,
 .theme-zenburn {
-	.titlebar {
+	.label {
 		color: mapGet($palette, spanishGray);
 		border-bottom: 1px solid mapGet($palette, onyx);
 	}
 }
 
-/* Dark Themes (titlebar bg)
+/* Dark Themes (label bg)
  **************/
 .theme-zenburn {
-	.titlebar { background: mapGet($palette, blackOlive); }
+	.label { background: mapGet($palette, blackOlive); }
 }
 .theme-lucario,
 .theme-oceanic-next {
-	.titlebar { background: mapGet($palette, gunmetal); }
+	.label { background: mapGet($palette, gunmetal); }
 }
 .theme-dracula,
 .theme-material,
 .theme-one-dark,
 .theme-nord {
-	.titlebar { background: mapGet($palette, darkGunmetal); }
+	.label { background: mapGet($palette, darkGunmetal); }
 }
 .theme-bespin,
 .theme-darcula,
@@ -151,13 +144,13 @@
 .theme-pastel-on-dark,
 .theme-railscasts,
 .theme-shadowfox {
-	.titlebar { background: mapGet($palette, raisinBlack); }
+	.label { background: mapGet($palette, raisinBlack); }
 }
 .theme-cobalt,
 .theme-erlang-dark,
 .theme-midnight,
 .theme-rubyblue {
-	.titlebar { background: mapGet($palette, maastrichtBlue); }
+	.label { background: mapGet($palette, maastrichtBlue); }
 }
 .theme-3024-night,
 .theme-abcdef,
@@ -166,11 +159,11 @@
 .theme-duotone-dark,
 .theme-seti,
 .theme-yonce {
-	.titlebar { background: mapGet($palette, licorice); }
+	.label { background: mapGet($palette, licorice); }
 }
 .theme-blackboard,
 .theme-night {
-	.titlebar { background: mapGet($palette, richBlack); }
+	.label { background: mapGet($palette, richBlack); }
 }
 .theme-colorforth,
 .theme-isotope,
@@ -181,5 +174,5 @@
 .theme-twilight,
 .theme-vibrant-ink,
 .theme-xq-dark {
-	.titlebar { background: mapGet($palette, black); }
+	.label { background: mapGet($palette, black); }
 }

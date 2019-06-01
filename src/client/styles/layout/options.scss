@@ -2,8 +2,8 @@
  * OPTIONS
  **********/
 .rb-code.readonly {
-	.titlebar::before {
-		position: absolute; // to .titlebar
+	.label::before {
+		position: absolute; // to .label
 		top: 100%;
 		right: 4px;
 		z-index: 2;
@@ -11,9 +11,13 @@
 		transition: opacity .8s;
 		content: 'readonly';
 	}
+	&:hover .label::before {
+		opacity: .8;
+	};
 }
 
-// Heights
+/* Heights
+ **********/
 .rb-code {
 	@mixin editorHeight($ht) {
 		$ht: #{$ht}#{'px'};

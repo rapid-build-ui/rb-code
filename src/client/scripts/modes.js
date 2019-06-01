@@ -2,7 +2,7 @@
  * CODEMIRROR MODES/LANGUAGES
  * --------------------------------------------
  * root keys = id
- * title  = component caption
+ * label  = component label
  * config = editor instance mode option
  * load   = loading info (dynamically add path
  *			based on load.name, ex: css/css.js)
@@ -13,202 +13,202 @@ import Paths from './paths.js';
  ********/
 const Modes = {
 	c: {
-		title: 'c',
+		label: 'c',
 		config: { name: 'text/x-csrc' },
 		load: { name: 'clike' }
 	},
 	'c++': {
-		title: 'c++',
+		label: 'c++',
 		config: { name: 'text/x-c++src' },
 		load: { name: 'clike' }
 	},
 	'c#': {
-		title: 'c#',
+		label: 'c#',
 		config: { name: 'text/x-csharp' },
 		load: { name: 'clike' }
 	},
 	coffeescript: {
-		title: 'coffee',
+		label: 'coffee',
 		config: { name: 'coffeescript' },
 		load: { name: 'coffeescript' }
 	},
 	cson: {
-		title: 'cson',
+		label: 'cson',
 		config: { name: 'coffeescript' },
 		load: { name: 'coffeescript' }
 	},
 	css: {
-		title: 'css',
+		label: 'css',
 		config: { name: 'css' },
 		load: { name: 'css' }
 	},
 	css: {
-		title: 'css',
+		label: 'css',
 		config: { name: 'css' },
 		load: { name: 'css' }
 	},
 	elm: {
-		title: 'elm',
+		label: 'elm',
 		config: { name: 'elm' },
 		load: { name: 'elm' }
 	},
 	erlang: {
-		title: 'erlang',
+		label: 'erlang',
 		config: { name: 'erlang' },
 		load: { name: 'erlang' }
 	},
 	erlang: {
-		title: 'erlang',
+		label: 'erlang',
 		config: { name: 'erlang' },
 		load: { name: 'erlang' }
 	},
 	'f#': {
-		title: 'f#',
+		label: 'f#',
 		config: { name: 'text/x-fsharp' },
 		load: { name: 'mllike' }
 	},
 	haml: {
-		title: 'haml',
+		label: 'haml',
 		config: { name: 'haml' },
 		load: { name: 'haml', deps: ['html','ruby'] }
 	},
 	html: {
-		title: 'html',
+		label: 'html',
 		config: { name: 'htmlmixed' },
 		load: { name: 'htmlmixed', deps: ['xml','js','css'] }
 	},
 	java: {
-		title: 'java',
+		label: 'java',
 		config: { name: 'text/x-java' },
 		load: { name: 'clike' }
 	},
 	js: {
-		title: 'js',
+		label: 'js',
 		config: { name: 'javascript' },
 		load: { name: 'javascript' }
 	},
 	json: {
-		title: 'json',
+		label: 'json',
 		config: { name: 'javascript', json: true },
 		load: { name: 'javascript' }
 	},
 	jsx: {
-		title: 'jsx',
+		label: 'jsx',
 		config: { name: 'jsx' },
 		load: { name: 'jsx', deps: ['xml','js'] }
 	},
 	less: {
-		title: 'less',
+		label: 'less',
 		config: { name: 'text/x-less' },
 		load: { name: 'css' }
 	},
 	markdown: {
-		title: 'markdown',
+		label: 'markdown',
 		config: { name: 'markdown' },
 		load: { name: 'markdown', deps: ['xml'] }
 	},
 	'objective-c': {
-		title: 'objective-c',
+		label: 'objective-c',
 		config: { name: 'text/x-objectivec' },
 		load: { name: 'clike' }
 	},
 	ocaml: {
-		title: 'ocaml',
+		label: 'ocaml',
 		config: { name: 'text/x-ocaml' },
 		load: { name: 'mllike' }
 	},
 	perl: {
-		title: 'perl',
+		label: 'perl',
 		config: { name: 'perl' },
 		load: { name: 'perl' }
 	},
 	php: {
-		title: 'php',
+		label: 'php',
 		config: { name: 'php' },
 		load: { name: 'php', deps: ['html','c'] }
 	},
 	powershell: {
-		title: 'powershell',
+		label: 'powershell',
 		config: { name: 'powershell' },
 		load: { name: 'powershell' }
 	},
 	properties: {
-		title: 'properties',
+		label: 'properties',
 		config: { name: 'properties' },
 		load: { name: 'properties' }
 	},
 	python: {
-		title: 'python',
+		label: 'python',
 		config: { name: 'python' },
 		load: { name: 'python' }
 	},
 	ruby: {
-		title: 'ruby',
+		label: 'ruby',
 		config: { name: 'ruby' },
 		load: { name: 'ruby' }
 	},
 	sass: {
-		title: 'sass',
+		label: 'sass',
 		config: { name: 'sass' },
 		load: { name: 'sass', deps: ['css'] }
 	},
 	scala: {
-		title: 'scala',
+		label: 'scala',
 		config: { name: 'text/x-scala' },
 		load: { name: 'clike' }
 	},
 	scss: {
-		title: 'scss',
+		label: 'scss',
 		config: { name: 'text/x-scss' },
 		load: { name: 'css' }
 	},
 	shell: {
-		title: 'shell',
+		label: 'shell',
 		config: { name: 'shell' },
 		load: { name: 'shell' }
 	},
 	spreadsheet: {
-		title: 'spreadsheet',
+		label: 'spreadsheet',
 		config: { name: 'spreadsheet' },
 		load: { name: 'spreadsheet' }
 	},
 	sql: {
-		title: 'sql',
+		label: 'sql',
 		config: { name: 'sql' },
 		load: { name: 'sql' }
 	},
 	stylus: {
-		title: 'stylus',
+		label: 'stylus',
 		config: { name: 'stylus' },
 		load: { name: 'stylus' }
 	},
 	swift: {
-		title: 'swift',
+		label: 'swift',
 		config: { name: 'swift' },
 		load: { name: 'swift' }
 	},
 	text: {
-		title: 'text',
+		label: 'text',
 		config: { name: 'text/plain' },
 		load: { name: 'text' }
 	},
 	typescript: {
-		title: 'typescript',
+		label: 'typescript',
 		config: { name: 'text/typescript' },
 		load: { name: 'javascript' }
 	},
 	xml: {
-		title: 'xml',
+		label: 'xml',
 		config: { name: 'xml' },
 		load: { name: 'xml' }
 	},
 	xquery: {
-		title: 'xquery',
+		label: 'xquery',
 		config: { name: 'xquery' },
 		load: { name: 'xquery' }
 	},
 	yaml: {
-		title: 'yaml',
+		label: 'yaml',
 		config: { name: 'yaml' },
 		load: { name: 'yaml' }
 	}

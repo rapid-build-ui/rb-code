@@ -8,12 +8,11 @@
 		${props.scrollable ? 'scrollable' : ''}
 		${props.height !== 'auto' ? `${props.height}-height` : ''}
 	">
-	<section class="titlebar">
-		${props.caption ? html`
-			<h3 class="caption">
-				${props.caption}
-			</h3>
-		`: '' }
+	<div class="label">
+		${props.label
+			? html`<label>${props.label}</label>`
+			: ''
+		}
 		<div class="actions">
 			<rb-popover
 				id="copy"
@@ -22,7 +21,7 @@
 				Copied! <rb-icon kind="thumbs-up"></rb-icon>
 			</rb-popover>
 		</div>
-	</section>
+	</div>
 	<textarea
 		tabindex="-1"
 		placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>

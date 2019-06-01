@@ -44,7 +44,7 @@ export class RbCode extends RbBase() {
 	 *************/
 	static get props() { // :object
 		return {
-			caption: props.string,
+			label: props.string,
 			placeholder: props.string,
 			height: Object.assign({}, props.string, {
 				default: 'tall' // TODO: maybe change this
@@ -112,9 +112,9 @@ export class RbCode extends RbBase() {
 		// if mobile then 'nocursor' (prevents keyboard from popping up)
 		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
 	}
-	_setCaption() { // :void
-		if (this.caption) return;
-		this.caption = this._mode.title || '';
+	_setLabel() { // :void
+		if (this.label) return;
+		this.label = this._mode.label || '';
 	}
 	_setTextareaValue() { // :void (hidden textarea)
 		this.rb.elms.textarea.value = this._content;
@@ -162,7 +162,7 @@ export class RbCode extends RbBase() {
 	 *********/
 	async _initEditor() { // :void
 		await this._loadEditor();
-		this._setCaption();
+		this._setLabel();
 		if (!this.rb.elms.textarea) return; // JIC
 
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
