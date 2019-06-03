@@ -119,14 +119,22 @@ export class RbCode extends RbBase() {
 	_setTextareaValue() { // :void (hidden textarea)
 		this.rb.elms.textarea.value = this._content;
 	}
+	async _setEditorStyles(theme) { // :void
+		const styleElm = this.rb.elms[theme !== 'default' ? 'eTheme' : 'eStyles'];
+		// console.log('STYLE ELM:', styleElm);
+		if (styleElm.getAttribute('populated') === theme) return;
+		styleElm.textContent = await Editor.getTheme(theme);
+		styleElm.setAttribute('populated', theme);
+	}
 
 	/* Loaders
 	 **********/
 	async _loadEditor() { // :void
 		this._mode = this.mode;
-		await Editor.loadPrereqs(this.rb.elms.eStyles);
+		await Editor.loadDeps();
+		await this._setEditorStyles('default');
+		if (this.theme !== 'default') await this._setEditorStyles(this.theme);
 		await Editor.loadMode(this._mode);
-		await Editor.loadTheme(this.rb.elms.eTheme, this.theme);
 		if (this.placeholder) await Editor.loadAddon('placeholder');
 	}
 
