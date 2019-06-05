@@ -5,10 +5,10 @@ import { RbBase, props, html } from '../../rb-base/scripts/rb-base.js';
 import Type                    from '../../rb-base/scripts/public/services/type.js';
 import Converter               from '../../rb-base/scripts/public/props/converters.js';
 import View                    from '../../rb-base/scripts/public/view/directives.js';
-import Editor                  from './editor.js';
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
 import '../../rb-popover/scripts/rb-popover.js';
+import './generated/editor.js';
 // true if phone or tablet (TODO: move to base and improve)
 const IS_MOBILE = !Type.is.undefined(window.orientation);
 
@@ -119,24 +119,6 @@ export class RbCode extends RbBase() {
 	_setTextareaValue() { // :void (hidden textarea)
 		this.rb.elms.textarea.value = this._content;
 	}
-	async _setEditorStyles(theme) { // :void
-		const styleElm = this.rb.elms[theme !== 'default' ? 'eTheme' : 'eStyles'];
-		// console.log('STYLE ELM:', styleElm);
-		if (styleElm.getAttribute('populated') === theme) return;
-		styleElm.textContent = await Editor.getTheme(theme);
-		styleElm.setAttribute('populated', theme);
-	}
-
-	/* Loaders
-	 **********/
-	async _loadEditor() { // :void
-		this._mode = this.mode;
-		await Editor.loadDeps();
-		await this._setEditorStyles('default');
-		if (this.theme !== 'default') await this._setEditorStyles(this.theme);
-		await Editor.loadMode(this._mode);
-		if (this.placeholder) await Editor.loadAddon('placeholder');
-	}
 
 	/* Event Management
 	 *******************/
@@ -168,8 +150,8 @@ export class RbCode extends RbBase() {
 
 	/* Editor
 	 *********/
-	async _initEditor() { // :void
-		await this._loadEditor();
+	_initEditor() { // :void
+		this._mode = this.mode;
 		this._setLabel();
 		if (!this.rb.elms.textarea) return; // JIC
 

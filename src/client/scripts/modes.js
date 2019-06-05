@@ -1,228 +1,172 @@
-/***********************************************
+/***************************************
  * CODEMIRROR MODES/LANGUAGES
- * --------------------------------------------
+ * ------------------------------------
  * root keys = id
  * label  = component label
  * config = editor instance mode option
- * load   = loading info (dynamically add path
- *			based on load.name, ex: css/css.js)
- ***********************************************/
-import Paths from './paths.js';
-
-/* Modes
- ********/
+ ***************************************/
 const Modes = {
 	c: {
 		label: 'c',
-		config: { name: 'text/x-csrc' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-csrc' }
 	},
 	'c++': {
 		label: 'c++',
-		config: { name: 'text/x-c++src' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-c++src' }
 	},
 	'c#': {
 		label: 'c#',
-		config: { name: 'text/x-csharp' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-csharp' }
 	},
 	coffeescript: {
 		label: 'coffee',
-		config: { name: 'coffeescript' },
-		load: { name: 'coffeescript' }
+		config: { name: 'coffeescript' }
 	},
 	cson: {
 		label: 'cson',
-		config: { name: 'coffeescript' },
-		load: { name: 'coffeescript' }
+		config: { name: 'coffeescript' }
 	},
 	css: {
 		label: 'css',
-		config: { name: 'css' },
-		load: { name: 'css' }
-	},
-	css: {
-		label: 'css',
-		config: { name: 'css' },
-		load: { name: 'css' }
+		config: { name: 'css' }
 	},
 	elm: {
 		label: 'elm',
-		config: { name: 'elm' },
-		load: { name: 'elm' }
+		config: { name: 'elm' }
 	},
 	erlang: {
 		label: 'erlang',
-		config: { name: 'erlang' },
-		load: { name: 'erlang' }
-	},
-	erlang: {
-		label: 'erlang',
-		config: { name: 'erlang' },
-		load: { name: 'erlang' }
+		config: { name: 'erlang' }
 	},
 	'f#': {
 		label: 'f#',
-		config: { name: 'text/x-fsharp' },
-		load: { name: 'mllike' }
+		config: { name: 'text/x-fsharp' }
+	},
+	go: {
+		label: 'go',
+		config: { name: 'go' }
+	},
+	groovy: {
+		label: 'groovy',
+		config: { name: 'groovy' }
 	},
 	haml: {
 		label: 'haml',
-		config: { name: 'haml' },
-		load: { name: 'haml', deps: ['html','ruby'] }
+		config: { name: 'haml' }
 	},
 	html: {
 		label: 'html',
-		config: { name: 'htmlmixed' },
-		load: { name: 'htmlmixed', deps: ['xml','js','css'] }
+		config: { name: 'htmlmixed' }
 	},
 	java: {
 		label: 'java',
-		config: { name: 'text/x-java' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-java' }
 	},
 	js: {
 		label: 'js',
-		config: { name: 'javascript' },
-		load: { name: 'javascript' }
+		config: { name: 'javascript' }
 	},
 	json: {
 		label: 'json',
-		config: { name: 'javascript', json: true },
-		load: { name: 'javascript' }
+		config: { name: 'javascript', json: true }
 	},
 	jsx: {
 		label: 'jsx',
-		config: { name: 'jsx' },
-		load: { name: 'jsx', deps: ['xml','js'] }
+		config: { name: 'jsx' }
 	},
 	less: {
 		label: 'less',
-		config: { name: 'text/x-less' },
-		load: { name: 'css' }
+		config: { name: 'text/x-less' }
 	},
 	markdown: {
 		label: 'markdown',
-		config: { name: 'markdown' },
-		load: { name: 'markdown', deps: ['xml'] }
+		config: { name: 'markdown' }
 	},
 	'objective-c': {
 		label: 'objective-c',
-		config: { name: 'text/x-objectivec' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-objectivec' }
 	},
 	ocaml: {
 		label: 'ocaml',
-		config: { name: 'text/x-ocaml' },
-		load: { name: 'mllike' }
+		config: { name: 'text/x-ocaml' }
 	},
 	perl: {
 		label: 'perl',
-		config: { name: 'perl' },
-		load: { name: 'perl' }
+		config: { name: 'perl' }
 	},
 	php: {
 		label: 'php',
-		config: { name: 'php' },
-		load: { name: 'php', deps: ['html','c'] }
+		config: { name: 'php' }
 	},
 	powershell: {
 		label: 'powershell',
-		config: { name: 'powershell' },
-		load: { name: 'powershell' }
+		config: { name: 'powershell' }
 	},
 	properties: {
 		label: 'properties',
-		config: { name: 'properties' },
-		load: { name: 'properties' }
+		config: { name: 'properties' }
 	},
 	python: {
 		label: 'python',
-		config: { name: 'python' },
-		load: { name: 'python' }
+		config: { name: 'python' }
 	},
 	ruby: {
 		label: 'ruby',
-		config: { name: 'ruby' },
-		load: { name: 'ruby' }
+		config: { name: 'ruby' }
 	},
 	sass: {
 		label: 'sass',
-		config: { name: 'sass' },
-		load: { name: 'sass', deps: ['css'] }
+		config: { name: 'sass' }
 	},
 	scala: {
 		label: 'scala',
-		config: { name: 'text/x-scala' },
-		load: { name: 'clike' }
+		config: { name: 'text/x-scala' }
 	},
 	scss: {
 		label: 'scss',
-		config: { name: 'text/x-scss' },
-		load: { name: 'css' }
+		config: { name: 'text/x-scss' }
 	},
 	shell: {
 		label: 'shell',
-		config: { name: 'shell' },
-		load: { name: 'shell' }
+		config: { name: 'shell' }
 	},
 	spreadsheet: {
 		label: 'spreadsheet',
-		config: { name: 'spreadsheet' },
-		load: { name: 'spreadsheet' }
+		config: { name: 'spreadsheet' }
 	},
 	sql: {
 		label: 'sql',
-		config: { name: 'sql' },
-		load: { name: 'sql' }
+		config: { name: 'sql' }
 	},
 	stylus: {
 		label: 'stylus',
-		config: { name: 'stylus' },
-		load: { name: 'stylus' }
+		config: { name: 'stylus' }
 	},
 	swift: {
 		label: 'swift',
-		config: { name: 'swift' },
-		load: { name: 'swift' }
+		config: { name: 'swift' }
 	},
 	text: {
 		label: 'text',
-		config: { name: 'text/plain' },
-		load: { name: 'text' }
+		config: { name: 'text/plain' }
 	},
 	typescript: {
 		label: 'typescript',
-		config: { name: 'text/typescript' },
-		load: { name: 'javascript' }
+		config: { name: 'text/typescript' }
 	},
 	xml: {
 		label: 'xml',
-		config: { name: 'xml' },
-		load: { name: 'xml' }
+		config: { name: 'xml' }
 	},
 	xquery: {
 		label: 'xquery',
-		config: { name: 'xquery' },
-		load: { name: 'xquery' }
+		config: { name: 'xquery' }
 	},
 	yaml: {
 		label: 'yaml',
-		config: { name: 'yaml' },
-		load: { name: 'yaml' }
+		config: { name: 'yaml' }
 	}
 };
-
-/* Populate Load Path
- *********************/
-(() => {
-	for (const [id, mode] of Object.entries(Modes)) {
-		if (id === 'text') continue; // codemirror's default mode (nothing to load)
-		const { name } = mode.load;
-		mode.load.path = `${Paths.editor.modes}/${name}/${name}.js`;
-	}
-})();
 
 /* Export it!
  *************/

@@ -16,6 +16,9 @@ common:
 				scripts: [
 					'scripts/**/*.js'
 				]
+				styles: [
+					'styles/**/*.css'
+				]
 
 	extra:
 		copy:

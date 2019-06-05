@@ -1,11 +1,8 @@
 /********************
  * CODEMIRROR THEMES
  ********************/
-import Paths from './paths.js';
-
-/* Included Themes (with codemirror)
- ******************/
-const IncludedThemes = [
+// Included Themes (with codemirror)
+const Themes = [
 	'3024-day',
 	'3024-night',
 	'abcdef',
@@ -66,27 +63,13 @@ const IncludedThemes = [
 
 /* Third Party Themes
  *********************/
-const ExternalThemes = {
-	'one-dark': `codemirror-one-dark-theme/one-dark.css`
-};
+Themes.push(
+	'one-dark'
+)
 
-/* Themes Export (init with codemirror's required styles)
- ****************/
-let Themes = { // :{ theme: <string>path | null }
-	default: `${Paths.editor.lib}/codemirror.css`
-};
-
-/* Populate and Sort
- ********************/
-(() => {
-	for (const theme of IncludedThemes)
-		Themes[theme] = `${Paths.editor.themes}/${theme}.css`;
-
-	for (const [theme, path] of Object.entries(ExternalThemes))
-		Themes[theme] = `${Paths.node_modules}/${path}`;
-
-	Themes = Object.fromEntries(Object.entries(Themes).sort());
-})();
+/* Prep Themes
+ **************/
+Themes.sort();
 
 /* Export it!
  *************/
