@@ -130,10 +130,6 @@ const Modes = {
 		label: 'shell',
 		config: { name: 'shell' }
 	},
-	spreadsheet: {
-		label: 'spreadsheet',
-		config: { name: 'spreadsheet' }
-	},
 	sql: {
 		label: 'sql',
 		config: { name: 'sql' }
