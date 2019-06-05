@@ -17,6 +17,7 @@
 /* Not Editor
  *************/
 .label,
+.subtext,
 .rb-code .CodeMirror-placeholder {
 	font-family: mapGet($fonts, default);
 }
@@ -28,6 +29,10 @@ label {
 }
 .actions {
 	font-size: 14.5px;
+}
+.subtext {
+	font-size: 13px;
+	font-weight: 400;
 }
 .rb-code .CodeMirror-placeholder {
 	font-size: 13px;

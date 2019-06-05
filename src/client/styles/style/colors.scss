@@ -1,7 +1,17 @@
 /*********
  * COLORS
  *********/
-// Options
+.subtext {
+	color: mapGet($palette, lightSlateGray);
+}
+.rb-code.invalid {
+	.subtext {
+		color: mapGet($palette, jasper);
+	}
+}
+
+/* Options
+ **********/
 .rb-code .CodeMirror-placeholder {
 	opacity: .8;
 	color: mapGet($palette, silverChalice);
