@@ -23,24 +23,31 @@ export class RbCode extends FormControl(RbBase()) {
 		this._editorEvents = {};
 		this.rb.formControl.isTextarea = true;
 	}
+	connectedCallback() { // :void
+		super.connectedCallback && super.connectedCallback();
+		setTimeout(() => {
+			const textarea = this.shadowRoot.querySelector('textarea');
+			this.rb.elms.textarea = textarea;
+			Object.assign(this.rb.formControl, {
+				elm:      textarea,
+				focusElm: textarea
+			});
+			this._mode = this.mode;
+			this._initEditor();
+		});
+	}
 	disconnectedCallback() { // :void
 		super.disconnectedCallback && super.disconnectedCallback();
 		this._destroyEditor();
 	}
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
-		const textarea = this.shadowRoot.querySelector('textarea');
-		Object.assign(this.rb.formControl, {
-			elm:      textarea,
-			focusElm: textarea
-		});
 		Object.assign(this.rb.elms, {
-			textarea,
 			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
 		});
+		this._setLabel();
 		this._attachEvents();
-		this._initEditor();
 	}
 
 	/* Properties
@@ -195,10 +202,6 @@ export class RbCode extends FormControl(RbBase()) {
 	/* Editor
 	 *********/
 	_initEditor() { // :void
-		this._mode = this.mode;
-		this._setLabel();
-		if (!this.rb.elms.textarea) return; // JIC
-
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
 			indentUnit:      4, // uses 2 spaces without smartIndent
 			indentWithTabs:  true,
