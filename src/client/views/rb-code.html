@@ -4,6 +4,8 @@
 		${props.kind}
 		theme-${props.theme}
 		mode-${props.mode}
+		${this._active ? 'active' : ''}
+		${this._valid ? 'valid' : 'invalid'}
 		${props.readonly ? 'readonly' : ''}
 		${props.scrollable ? 'scrollable' : ''}
 		${props.height !== 'auto' ? `${props.height}-height` : ''}
@@ -31,7 +33,12 @@
 	</div>
 	<textarea
 		tabindex="-1"
+		.value="${props.value}"
 		placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
+	${this._error || props.subtext
+		? html`<span class="subtext">${this._error || props.subtext}</span>`
+		: null
+	}
 </div>
 
 <link rel="stylesheet" href="../styles/generated/editor.css">

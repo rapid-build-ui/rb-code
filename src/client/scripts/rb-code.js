@@ -2,6 +2,7 @@
  * RB-CODE
  **********/
 import { RbBase, props, html } from '../../rb-base/scripts/rb-base.js';
+import FormControl             from '../../form-control/scripts/form-control.js';
 import Type                    from '../../rb-base/scripts/public/services/type.js';
 import Converter               from '../../rb-base/scripts/public/props/converters.js';
 import View                    from '../../rb-base/scripts/public/view/directives.js';
@@ -13,29 +14,31 @@ import '../../rb-popover/scripts/rb-popover.js';
 // true if phone or tablet (TODO: move to base and improve)
 const IS_MOBILE = !Type.is.undefined(window.orientation);
 
-export class RbCode extends RbBase() {
+export class RbCode extends FormControl(RbBase()) {
 	/* Lifecycle
 	 ************/
 	constructor() {
 		super();
-		this._content = this.innerHTML; // store for textarea later
-		this._clearContent();
-		this._editorEvents = {}; // populated in _attachEditorEvents()
+		this._initValue();
+		this._editorEvents = {};
+		this.rb.formControl.isTextarea = true;
 	}
 	disconnectedCallback() { // :void
 		super.disconnectedCallback && super.disconnectedCallback();
-		if (!this.editor) return;
-		this.editor.off('change', this._editorEvents.change);
-		this.editor.toTextArea();
+		this._destroyEditor();
 	}
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
+		const textarea = this.shadowRoot.querySelector('textarea');
+		Object.assign(this.rb.formControl, {
+			elm:      textarea,
+			focusElm: textarea
+		});
 		Object.assign(this.rb.elms, {
+			textarea,
 			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
-			textarea:    this.shadowRoot.querySelector('textarea')
 		});
-		this._setTextareaValue();
 		this._attachEvents();
 		this._initEditor();
 	}
@@ -44,7 +47,10 @@ export class RbCode extends RbBase() {
 	 *************/
 	static get props() { // :object
 		return {
+			...super.props,
 			label: props.string,
+			value: props.string,
+			subtext: props.string,
 			placeholder: props.string,
 			height: Object.assign({}, props.string, {
 				default: 'tall' // TODO: maybe change this
@@ -77,25 +83,29 @@ export class RbCode extends RbBase() {
 		};
 	}
 
+	/* Observer
+	 ***********/
+	updating(prevProps) { // :void
+		if (prevProps.value === this.value) return;
+		this.rb.events.emit(this, 'value-changed', {
+			detail: { value: this.value }
+		});
+	}
+
 	/* Helpers
 	 **********/
-	_clearContent() { // :void
+	_clearHostContent() { // :void
 		while (this.firstChild)
 			this.removeChild(this.firstChild);
+	}
+	_initValue() { // :void
+		if (this.hasAttribute('value')) return;
+		this.value = this.innerHTML.trim();
+		this._clearHostContent();
 	}
 
 	/* Getters and Setters
 	 **********************/
-	get _content() { // :html<string>
-		// console.log('GET CONTENT');
-		// console.log(this.__content);
-		return this.__content;
-	}
-	set _content(content='') { // :void
-		// console.log('SET CONTENT');
-		// console.log(content);
-		this.__content = content.trim();
-	}
 	get _mode() { // :mode<object>
 		return this.__mode;
 	}
@@ -116,15 +126,13 @@ export class RbCode extends RbBase() {
 		if (this.label) return;
 		this.label = this._mode.label || '';
 	}
-	_setTextareaValue() { // :void (hidden textarea)
-		this.rb.elms.textarea.value = this._content;
-	}
 
 	/* Event Management
 	 *******************/
 	_attachEvents() { // :void
 		this.rb.elms.copyPopover.onclick = this._copy.bind(this);
 		if (this.rb.elms.clearBtn) this.rb.elms.clearBtn.onclick = this._clear.bind(this);
+		this.rb.events.add(this.rb.elms.textarea, 'focus', this._onfocusTextarea);
 	}
 	_clear(evt) { // :void
 		this.editor.setValue('');
@@ -132,25 +140,56 @@ export class RbCode extends RbBase() {
 	}
 	_copy(evt) { // :void
 		const { textarea } = this.rb.elms;
+		this._skipFocus = true;
 		textarea.select(); // must select first to copy, don't focus()
 		textarea.setSelectionRange(0, textarea.textLength); // iOS won't copy without this
 		document.execCommand('copy');
 		textarea.blur(); // removes selection
 		setTimeout(() => this.rb.elms.copyPopover.open = false, 1500);
 	}
+	_onfocusTextarea(evt) { // :void
+		if (this._skipFocus) return this._skipFocus = false;
+		this.editor.focus();
+	}
 
 	/* Editor Events
 	 ****************/
 	_attachEditorEvents() { // :void
-		this._editorEvents.change = this._onchange.bind(this);
+		Object.assign(this._editorEvents, {
+			blur:   this._onblurEditor.bind(this),
+			change: this._onchangeEditor.bind(this),
+			focus:  this._onfocusEditor.bind(this),
+		});
+		this.editor.on('blur',   this._editorEvents.blur);
 		this.editor.on('change', this._editorEvents.change);
+		this.editor.on('focus',  this._editorEvents.focus);
 	}
-	_onchange(editor, change) { // :void (updates hidden textarea)
-		// console.log('EDITOR:', this.editor);
-		// console.log('CHANGE:', change);
-		// console.log('TEXTAREA VALUE:');
-		// console.log(this.rb.elms.textarea.value);
+	_destroyEditor() { // :void
+		if (!this.editor) return;
+		this.editor.off('blur',   this._editorEvents.blur);
+		this.editor.off('change', this._editorEvents.change);
+		this.editor.off('focus',  this._editorEvents.focus);
+		this.editor.toTextArea();
+	}
+	async _onchangeEditor(editor, change) { // :void
 		this.editor.save();
+		const oldVal = this.value;
+		const newVal = this.rb.elms.textarea.value;
+		this.value = newVal;
+		if (!this._dirty && newVal !== oldVal)
+			return this._dirty = true;
+		if (!this._touched) return;
+		await this.validate();
+	}
+	async _onblurEditor(editor, evt) { // :void
+		this._active = false;
+		if (!this._dirty) return;
+		this._touched = true;
+		this.value = this.rb.elms.textarea.value;
+		await this.validate();
+	}
+	_onfocusEditor(editor, evt) { // :void
+		this._active = true;
 	}
 
 	/* Editor
