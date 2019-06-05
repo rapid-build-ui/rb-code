@@ -59,9 +59,7 @@ export class RbCode extends FormControl(RbBase()) {
 			value: props.string,
 			subtext: props.string,
 			placeholder: props.string,
-			height: Object.assign({}, props.string, {
-				default: 'tall' // TODO: maybe change this
-			}),
+			height: props.string,
 			kind: Object.assign({}, props.string, { // TODO: maybe
 				default: 'default'
 			}),

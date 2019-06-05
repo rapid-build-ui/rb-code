@@ -8,7 +8,7 @@
 		${this._valid ? 'valid' : 'invalid'}
 		${props.readonly ? 'readonly' : ''}
 		${props.scrollable ? 'scrollable' : ''}
-		${props.height !== 'auto' ? `${props.height}-height` : ''}
+		${props.height ? `${props.height}-height` : ''}
 	">
 	<div class="label">
 		${props.label

@@ -2,7 +2,6 @@
  * HEIGHT OPTIONS (see options.scss)
  *****************/
 export default [
-	'auto',
 	'teeny',
 	'tiny',
 	'mini',
