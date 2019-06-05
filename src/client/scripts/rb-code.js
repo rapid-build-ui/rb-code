@@ -31,8 +31,6 @@ export class RbCode extends RbBase() {
 		super.viewReady && super.viewReady();
 		Object.assign(this.rb.elms, {
 			copyPopover: this.shadowRoot.getElementById('copy'),
-			eStyles:     this.shadowRoot.getElementById('editor'),
-			eTheme:      this.shadowRoot.getElementById('theme'),
 			textarea:    this.shadowRoot.querySelector('textarea')
 		});
 		this._setTextareaValue();
