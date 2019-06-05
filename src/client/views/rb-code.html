@@ -20,6 +20,13 @@
 				icon-kind="copy">
 				Copied! <rb-icon kind="thumbs-up"></rb-icon>
 			</rb-popover>
+			${!props.readonly ? html`
+				<rb-button
+					id="clear"
+					icon-kind="times-circle"
+					text='{"inherit":"color"}'>
+				</rb-button>`
+			: '' }
 		</div>
 	</div>
 	<textarea

@@ -7,8 +7,9 @@ import Converter               from '../../rb-base/scripts/public/props/converte
 import View                    from '../../rb-base/scripts/public/view/directives.js';
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
-import '../../rb-popover/scripts/rb-popover.js';
 import './generated/editor.js';
+import '../../rb-button/scripts/rb-button.js';
+import '../../rb-popover/scripts/rb-popover.js';
 // true if phone or tablet (TODO: move to base and improve)
 const IS_MOBILE = !Type.is.undefined(window.orientation);
 
@@ -30,6 +31,7 @@ export class RbCode extends RbBase() {
 	viewReady() { // :void
 		super.viewReady && super.viewReady();
 		Object.assign(this.rb.elms, {
+			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
 			textarea:    this.shadowRoot.querySelector('textarea')
 		});
@@ -122,6 +124,11 @@ export class RbCode extends RbBase() {
 	 *******************/
 	_attachEvents() { // :void
 		this.rb.elms.copyPopover.onclick = this._copy.bind(this);
+		if (this.rb.elms.clearBtn) this.rb.elms.clearBtn.onclick = this._clear.bind(this);
+	}
+	_clear(evt) { // :void
+		this.editor.setValue('');
+		this.editor.focus();
 	}
 	_copy(evt) { // :void
 		const { textarea } = this.rb.elms;

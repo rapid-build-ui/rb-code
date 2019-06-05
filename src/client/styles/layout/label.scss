@@ -35,9 +35,9 @@
 		> * {
 			position: relative;
 			top: 1px;
-		}
-		rb-popover ~ rb-popover {
-			margin-left: 5px;
+			~ * {
+				margin-left: 5px;
+			}
 		}
 	}
 }
