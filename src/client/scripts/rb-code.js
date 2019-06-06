@@ -128,7 +128,8 @@ export class RbCode extends FormControl(RbBase()) {
 		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
 	}
 	_setLabel() { // :void
-		if (this.label) return;
+		if (this.label) return; // custom label
+		if (!this.label.trim() && this.hasAttribute('label')) return; // blank label
 		this.label = this._mode.label || '';
 	}
 
