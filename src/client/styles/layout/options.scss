@@ -21,7 +21,7 @@
 .rb-code {
 	@mixin editorHeight($ht) {
 		$ht: #{$ht}#{'px'};
-		.CodeMirror { min-height: $ht; }
+		.CodeMirror-scroll { min-height: $ht; }
 		&.scrollable .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
 	}
 	&.teeny-height      { @include editorHeight(44);  }
