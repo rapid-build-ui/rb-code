@@ -20,7 +20,8 @@
  **********/
 .rb-code {
 	@mixin editorHeight($ht) {
-		$ht: #{$ht}#{'px'};
+		min-height: $ht + 32px; // plus label height (helps the shift shock)
+		$ht: #{$ht}px;
 		.CodeMirror-scroll { min-height: $ht; }
 		&.scrollable .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
 	}
