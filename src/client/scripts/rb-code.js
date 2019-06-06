@@ -88,15 +88,6 @@ export class RbCode extends FormControl(RbBase()) {
 		};
 	}
 
-	/* Observer
-	 ***********/
-	updating(prevProps) { // :void
-		if (prevProps.value === this.value) return;
-		this.rb.events.emit(this, 'value-changed', {
-			detail: { value: this.value }
-		});
-	}
-
 	/* Helpers
 	 **********/
 	_clearHostContent() { // :void
@@ -158,6 +149,22 @@ export class RbCode extends FormControl(RbBase()) {
 		this.editor.focus();
 	}
 
+	/* Observer
+	 ***********/
+	updating(prevProps) { // :void
+		if (prevProps.value === this.value) return;
+		// console.log('UPDATING');
+		// console.log(prevProps.value);
+		// console.log(this.value);
+		this.rb.events.emit(this, 'value-changed', {
+			detail: { value: this.value }
+		});
+		// when manually setting rb-code elm value
+		if (!this.editor) return;
+		if (this.value === this.editor.getValue()) return;
+		this.editor.setValue(this.value);
+	}
+
 	/* Editor Events
 	 ****************/
 	_attachEditorEvents() { // :void
@@ -178,12 +185,14 @@ export class RbCode extends FormControl(RbBase()) {
 		this.editor.toTextArea();
 	}
 	async _onchangeEditor(editor, change) { // :void
-		this.editor.save();
-		const oldVal = this.value;
-		const newVal = this.rb.elms.textarea.value;
+		if (change.origin.toLowerCase() === 'setvalue') return; // called from updating()
+		// console.log('EDITOR CHANGED');
+		this.editor.save(); // updates textarea
+		const oldVal     = this.value;
+		const newVal     = this.rb.elms.textarea.value;
+		const hasChanged = newVal !== oldVal;
 		this.value = newVal;
-		if (!this._dirty && newVal !== oldVal)
-			return this._dirty = true;
+		if (!this._dirty && hasChanged) return this._dirty = true;
 		if (!this._touched) return;
 		await this.validate();
 	}
@@ -191,7 +200,6 @@ export class RbCode extends FormControl(RbBase()) {
 		this._active = false;
 		if (!this._dirty) return;
 		this._touched = true;
-		this.value = this.rb.elms.textarea.value;
 		await this.validate();
 	}
 	_onfocusEditor(editor, evt) { // :void
