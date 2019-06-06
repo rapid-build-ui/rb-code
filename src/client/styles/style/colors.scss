@@ -4,9 +4,16 @@
 .subtext {
 	color: mapGet($palette, lightSlateGray);
 }
+
+/* Invalid
+ **********/
 .rb-code.invalid {
+	label,
 	.subtext {
 		color: mapGet($palette, jasper);
+	}
+	.label {
+		border-bottom: 1px solid mapGet($palette, jasper);
 	}
 }
 
