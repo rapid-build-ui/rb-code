@@ -6,3 +6,9 @@
 	line-height: 18px;
 	text-align: left;
 }
+
+/* Theme (adjustments)
+ ********/
+.without-line-numbers .cm-s-yonce {
+	.CodeMirror-line { padding-left: 4px; }
+}
