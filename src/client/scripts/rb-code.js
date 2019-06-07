@@ -33,6 +33,7 @@ export class RbCode extends FormControl(RbBase()) {
 				focusElm: textarea
 			});
 			this._mode = this.mode;
+			this._setLabel();
 			this._initEditor();
 		});
 	}
@@ -46,7 +47,6 @@ export class RbCode extends FormControl(RbBase()) {
 			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
 		});
-		this._setLabel();
 		this._attachEvents();
 	}
 
@@ -55,6 +55,7 @@ export class RbCode extends FormControl(RbBase()) {
 	static get props() { // :object
 		return {
 			...super.props,
+			// actions: props.array,
 			label: props.string,
 			value: props.string,
 			subtext: props.string,
@@ -77,6 +78,16 @@ export class RbCode extends FormControl(RbBase()) {
 			}),
 			scrollable: Object.assign({}, props.boolean, {
 				deserialize: Converter.valueless
+			}),
+			actions: Object.assign({}, props.array, {
+				deserialize(val) { // :string[]
+					if (!Type.is.string(val)) return [];
+					if (!/^\[[^]*\]$/.test(val)) return [];
+					val = JSON.parse(val);
+					val.sort().reverse(); // desc order [copy, clear] (works for now)
+					val = val.map(str => str.trim().toLowerCase());
+					return val;
+				}
 			}),
 			theme: Object.assign({}, props.string, {
 				default: 'default',
@@ -127,9 +138,10 @@ export class RbCode extends FormControl(RbBase()) {
 	/* Event Management
 	 *******************/
 	_attachEvents() { // :void
-		this.rb.elms.copyPopover.onclick = this._copy.bind(this);
-		if (this.rb.elms.clearBtn) this.rb.elms.clearBtn.onclick = this._clear.bind(this);
-		this.rb.events.add(this.rb.elms.textarea, 'focus', this._onfocusTextarea);
+		const { clearBtn, copyPopover, textarea } = this.rb.elms;
+		if (clearBtn) clearBtn.onclick = this._clear.bind(this);
+		if (copyPopover) copyPopover.onclick = this._copy.bind(this);
+		this.rb.events.add(textarea, 'focus', this._onfocusTextarea);
 	}
 	_clear(evt) { // :void
 		this.editor.setValue('');

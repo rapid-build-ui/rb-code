@@ -17,19 +17,23 @@
 			: ''
 		}
 		<div class="actions">
-			<rb-popover
-				id="copy"
-				inherit-color
-				icon-kind="copy">
-				Copied! <rb-icon kind="thumbs-up"></rb-icon>
-			</rb-popover>
-			${!props.readonly ? html`
-				<rb-button
-					id="clear"
-					icon-kind="times-circle"
-					text='{"inherit":"color"}'>
-				</rb-button>`
-			: '' }
+			${props.actions.map((item, i) => html`
+				${item === 'copy' ? html`
+					<rb-popover
+						id="copy"
+						inherit-color
+						icon-kind="copy">
+						Copied! <rb-icon kind="thumbs-up"></rb-icon>
+					</rb-popover>
+				`:''}
+				${item === 'clear' && !props.readonly ? html`
+					<rb-button
+						id="clear"
+						icon-kind="times-circle"
+						text='{"inherit":"color"}'>
+					</rb-button>
+				`:''}
+			`)}
 		</div>
 	</div>
 	<textarea
@@ -38,7 +42,7 @@
 		placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
 	${this._error || props.subtext
 		? html`<span class="subtext">${this._error || props.subtext}</span>`
-		: null
+		: ''
 	}
 </div>
 
