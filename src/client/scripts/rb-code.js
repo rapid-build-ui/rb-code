@@ -55,7 +55,6 @@ export class RbCode extends FormControl(RbBase()) {
 	static get props() { // :object
 		return {
 			...super.props,
-			// actions: props.array,
 			label: props.string,
 			value: props.string,
 			subtext: props.string,
