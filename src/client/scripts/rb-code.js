@@ -20,6 +20,7 @@ export class RbCode extends FormControl(RbBase()) {
 	constructor() {
 		super();
 		this._initValue();
+		this._formatValue();
 		this._editorEvents = {};
 		this.rb.formControl.isTextarea = true;
 	}
@@ -108,6 +109,43 @@ export class RbCode extends FormControl(RbBase()) {
 		if (this.hasAttribute('value')) return;
 		this.value = this.innerHTML.trim();
 		this._clearHostContent();
+	}
+	_formatValue() { // :void
+		const has = {
+			newLines(text) { // :boolean
+				const index = text.indexOf('\n');
+				return index !== -1;
+			},
+			tabs(text) { // :boolean
+				const index = text.indexOf('\t');
+				return index !== -1;
+			}
+		};
+		const get = {
+			firstCharIndex(text) { // :int
+				return text.search(/\S/);
+			},
+			firstLineTabsCnt(text) { // :int
+				const index      = this.firstCharIndex(text);
+				const whitespace = text.substring(0, index);
+				const tabs       = whitespace.match(/\t/g);
+				if (!tabs) return 0;
+				return tabs.length;
+			},
+			formattedText(text) { // :string
+				const tabsCnt = this.firstLineTabsCnt(text);
+				const re = new RegExp(`\n\t{${tabsCnt}}`,'g');
+				text = text.trim().replace(re,'\n');
+				return text;
+			},
+			text(text) { // :string | any
+				if (!Type.is.string(text)) return text;
+				text = text.trimRight();
+				if (!has.newLines(text) && !has.tabs(text)) return text;
+				return this.formattedText(text);
+			}
+		}
+		this.value = get.text(this.value);
 	}
 
 	/* Getters and Setters
@@ -242,6 +280,8 @@ export class RbCode extends FormControl(RbBase()) {
 		// console.log(this.editor.options.mode);
 		// console.log(this.editor.getOption('readOnly'));
 		// console.log(this.editor.getOption('cursorBlinkRate'));
+		// this.editor.execCommand('selectAll');
+		// this.editor.indentSelection('smart');
 	}
 
 	/* Template
