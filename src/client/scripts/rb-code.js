@@ -19,14 +19,14 @@ export class RbCode extends FormControl(RbBase()) {
 	 ************/
 	constructor() {
 		super();
-		this._initValue();
-		this._formatValue();
 		this._editorEvents = {};
 		this.rb.formControl.isTextarea = true;
 	}
 	connectedCallback() { // :void
 		super.connectedCallback && super.connectedCallback();
 		setTimeout(() => {
+			this._initValue();
+			this._clearHostContent();
 			const textarea = this.shadowRoot.querySelector('textarea');
 			this.rb.elms.textarea = textarea;
 			Object.assign(this.rb.formControl, {
@@ -57,7 +57,6 @@ export class RbCode extends FormControl(RbBase()) {
 		return {
 			...super.props,
 			label: props.string,
-			value: props.string,
 			subtext: props.string,
 			placeholder: props.string,
 			height: props.string,
@@ -95,6 +94,14 @@ export class RbCode extends FormControl(RbBase()) {
 					if (!Type.is.string(val)) return val;
 					return val.trim().toLowerCase();
 				}
+			}),
+			value: Object.assign({}, props.string, {
+				coerce(val) {
+					// prevents returning string 'null' and 'undefined'
+					if (Type.is.null(val)) return val;
+					if (Type.is.undefined(val)) return val;
+					return String(val);
+				}
 			})
 		};
 	}
@@ -107,10 +114,29 @@ export class RbCode extends FormControl(RbBase()) {
 	}
 	_initValue() { // :void
 		if (this.hasAttribute('value')) return;
-		this.value = this.innerHTML.trim();
-		this._clearHostContent();
+		const xmp    = this.firstElementChild;
+		const hasXmp = !!xmp && xmp.localName === 'xmp';
+		if (!hasXmp) return;
+		let value = xmp.textContent;
+			value = this._getFormattedValue(value);
+		this.value = value;
 	}
-	_formatValue() { // :void
+
+	/* Getters and Setters
+	 **********************/
+	get _mode() { // :mode<object>
+		return this.__mode;
+	}
+	set _mode(mode) { // :void
+		this.__mode = Modes[mode] || Modes['text']; // :object
+	}
+
+	/* Getter and Setter (methods)
+	 ********************/
+	_getCursorBlinkRate() { // :milliseconds<int> (-1 hides the cursor)
+		return this.readonly ? -1 : CodeMirror.defaults.cursorBlinkRate;
+	}
+	_getFormattedValue(value) { // :string | any
 		const has = {
 			newLines(text) { // :boolean
 				const index = text.indexOf('\n');
@@ -145,22 +171,7 @@ export class RbCode extends FormControl(RbBase()) {
 				return this.formattedText(text);
 			}
 		}
-		this.value = get.text(this.value);
-	}
-
-	/* Getters and Setters
-	 **********************/
-	get _mode() { // :mode<object>
-		return this.__mode;
-	}
-	set _mode(mode) { // :void
-		this.__mode = Modes[mode] || Modes['text']; // :object
-	}
-
-	/* Getter and Setter (methods)
-	 ********************/
-	_getCursorBlinkRate() { // :milliseconds<int> (-1 hides the cursor)
-		return this.readonly ? -1 : CodeMirror.defaults.cursorBlinkRate;
+		return get.text(value);
 	}
 	_getReadonly() { // :boolean | string
 		// if mobile then 'nocursor' (prevents keyboard from popping up)
@@ -202,7 +213,7 @@ export class RbCode extends FormControl(RbBase()) {
 	 ***********/
 	updating(prevProps) { // :void
 		if (prevProps.value === this.value) return;
-		// console.log('UPDATING');
+		// console.log('UPDATING CODE');
 		// console.log(prevProps.value);
 		// console.log(this.value);
 		this.rb.events.emit(this, 'value-changed', {
