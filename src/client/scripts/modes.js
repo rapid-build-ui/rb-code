@@ -50,10 +50,6 @@ const Modes = {
 		label: 'groovy',
 		config: { name: 'groovy' }
 	},
-	haml: {
-		label: 'haml',
-		config: { name: 'haml' }
-	},
 	html: {
 		label: 'html',
 		config: { name: 'htmlmixed' }
@@ -62,7 +58,7 @@ const Modes = {
 		label: 'java',
 		config: { name: 'text/x-java' }
 	},
-	js: {
+	javascript: {
 		label: 'js',
 		config: { name: 'javascript' }
 	},
@@ -101,10 +97,6 @@ const Modes = {
 	powershell: {
 		label: 'powershell',
 		config: { name: 'powershell' }
-	},
-	properties: {
-		label: 'properties',
-		config: { name: 'properties' }
 	},
 	python: {
 		label: 'python',
@@ -153,10 +145,6 @@ const Modes = {
 	xml: {
 		label: 'xml',
 		config: { name: 'xml' }
-	},
-	xquery: {
-		label: 'xquery',
-		config: { name: 'xquery' }
 	},
 	yaml: {
 		label: 'yaml',

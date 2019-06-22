@@ -6,7 +6,6 @@
 	"erlang",
 	"go",
 	"groovy",
-	"haml",
 	"htmlmixed",
 	"javascript",
 	"jsx",
@@ -15,7 +14,6 @@
 	"perl",
 	"php",
 	"powershell",
-	"properties",
 	"python",
 	"ruby",
 	"sass",
@@ -24,6 +22,5 @@
 	"stylus",
 	"swift",
 	"xml",
-	"xquery",
 	"yaml"
 ]
