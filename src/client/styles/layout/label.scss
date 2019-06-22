@@ -42,3 +42,13 @@
 		}
 	}
 }
+
+// Must override because of readonly option. (see options.scss)
+// Kind of fragile. (would rather use display: none)
+.rb-code.no-label {
+	.label {
+		padding: 0;
+		min-height: 0;
+		border: none;
+	}
+}

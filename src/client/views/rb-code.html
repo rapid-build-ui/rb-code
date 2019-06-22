@@ -9,6 +9,7 @@
 		${props.readonly ? 'readonly' : ''}
 		${props.scrollable ? 'scrollable' : ''}
 		${props.height ? `${props.height}-height` : ''}
+		${!this.label.trim() && !this.actions.length ? 'no-label' : 'with-label'}
 		${props.lineNumbers ? 'with-line-numbers' : 'without-line-numbers'}
 	">
 	<div class="label">
