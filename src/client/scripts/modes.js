@@ -135,7 +135,7 @@ const Modes = {
 		config: { name: 'swift' }
 	},
 	text: {
-		label: 'text',
+		label: 'plain text',
 		config: { name: 'text/plain' }
 	},
 	typescript: {

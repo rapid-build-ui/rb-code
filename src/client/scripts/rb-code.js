@@ -188,7 +188,6 @@ export class RbCode extends FormControl(RbBase()) {
 	_setLabel() { // :void
 		if (this.label) return; // custom label
 		if (!this.label.trim() && this.hasAttribute('label')) return; // blank label
-		if (this._mode.label === 'text') return;
 		this.label = this._mode.label || '';
 	}
 
