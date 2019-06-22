@@ -19,7 +19,7 @@ const Modes = {
 		config: { name: 'text/x-csharp' }
 	},
 	coffeescript: {
-		label: 'coffee',
+		label: 'coffeescript',
 		config: { name: 'coffeescript' }
 	},
 	cson: {
@@ -59,7 +59,7 @@ const Modes = {
 		config: { name: 'text/x-java' }
 	},
 	javascript: {
-		label: 'js',
+		label: 'javascript',
 		config: { name: 'javascript' }
 	},
 	json: {
