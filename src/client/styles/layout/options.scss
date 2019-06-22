@@ -15,32 +15,3 @@
 		opacity: .7;
 	};
 }
-
-/* Heights
- **********/
-.rb-code {
-	@mixin editorHeight($ht) {
-		min-height: $ht + 32px; // plus label height (helps the shift shock)
-		$ht: #{$ht}px;
-		.CodeMirror-scroll { min-height: $ht; }
-		&.scrollable .CodeMirror { height: $ht; } // editor scrolls after surpassing min-height
-	}
-	&.teeny-height      { @include editorHeight(44);  }
-	&.tiny-height       { @include editorHeight(62);  }
-	&.mini-height       { @include editorHeight(80);  }
-	&.short-height      { @include editorHeight(98);  }
-	&.tall-height       { @include editorHeight(134); }
-	&.xtall-height      { @include editorHeight(152); }
-	&.xxtall-height     { @include editorHeight(170); }
-	&.xxxtall-height    { @include editorHeight(187); }
-	&.xxxxtall-height   { @include editorHeight(206); }
-	&.xxxxxtall-height  { @include editorHeight(224); }
-	&.xxxxxxtall-height { @include editorHeight(242); }
-	&.giant-height      { @include editorHeight(332); }
-	&.xgiant-height     { @include editorHeight(350); }
-	&.xxgiant-height    { @include editorHeight(368); }
-	&.xxxgiant-height   { @include editorHeight(404); }
-	&.jumbo-height      { @include editorHeight(493); }
-	&.xjumbo-height     { @include editorHeight(584); }
-	&.xxjumbo-height    { @include editorHeight(656); }
-}

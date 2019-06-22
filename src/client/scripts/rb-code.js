@@ -56,8 +56,8 @@ export class RbCode extends FormControl(RbBase()) {
 	static get props() { // :object
 		return {
 			...super.props,
+			rows: props.number,
 			label: props.string,
-			height: props.string,
 			subtext: props.string,
 			placeholder: props.string,
 			kind: Object.assign({}, props.string, { // TODO: maybe
@@ -177,6 +177,14 @@ export class RbCode extends FormControl(RbBase()) {
 		// if mobile then 'nocursor' (prevents keyboard from popping up)
 		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
 	}
+	_setHeight() { // :void
+		if (!this.rows) return;
+		if (this.rows <= 1) return;
+		const height = `${this.rows * 1.8915}em`;
+		this.shadowRoot.querySelector('.CodeMirror-scroll').style.minHeight = height;
+		if (!this.scrollable) return;
+		this.shadowRoot.querySelector('.CodeMirror').style.height = height;
+	}
 	_setLabel() { // :void
 		if (this.label) return; // custom label
 		if (!this.label.trim() && this.hasAttribute('label')) return; // blank label
@@ -283,7 +291,7 @@ export class RbCode extends FormControl(RbBase()) {
 			// smartIndent:     true, // default
 			// tabSize:         4, // default
 		});
-
+		this._setHeight();
 		this._attachEditorEvents();
 		// console.log(this.editor);
 		// console.log(CodeMirror.modes);
