@@ -12,7 +12,8 @@ import './generated/editor.js';
 import '../../rb-button/scripts/rb-button.js';
 import '../../rb-popover/scripts/rb-popover.js';
 // true if phone or tablet (TODO: move to base and improve)
-const IS_MOBILE = !Type.is.undefined(window.orientation);
+const IS_MOBILE        = !Type.is.undefined(window.orientation);
+const EDITOR_FONT_SIZE = 11.5; // if changed, must also change in fonts.scss
 
 export class RbCode extends FormControl(RbBase()) {
 	/* Lifecycle
@@ -24,6 +25,9 @@ export class RbCode extends FormControl(RbBase()) {
 	}
 	connectedCallback() { // :void
 		super.connectedCallback && super.connectedCallback();
+		this._mode = this.mode;
+		this._setLabel();
+		this._setHostMinHeight();
 		setTimeout(() => {
 			this._initValue();
 			this._clearHostContent();
@@ -33,8 +37,6 @@ export class RbCode extends FormControl(RbBase()) {
 				elm:      textarea,
 				focusElm: textarea
 			});
-			this._mode = this.mode;
-			this._setLabel();
 			this._initEditor();
 		});
 	}
@@ -177,13 +179,35 @@ export class RbCode extends FormControl(RbBase()) {
 		// if mobile then 'nocursor' (prevents keyboard from popping up)
 		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
 	}
-	_setHeight() { // :void
-		if (!this.rows) return;
-		if (this.rows <= 1) return;
-		const height = `${this.rows * 1.8915}em`;
+	_getEditorHeight() { // :float | null (becomes em unit)
+		if (!this.rows) return null;
+		if (this.rows <= 1) return null;
+		const height = this.rows * 1.8915;
+		return height;
+	}
+	_getTitlebarHeight() { // :float | null (becomes px unit)
+		const hasTitleBar = !!this.label.trim() || !!this.actions.length;
+		if (!hasTitleBar) return null;
+		return 31.5; // hard coded, titlebar isn't available in time
+	}
+	_setEditorHeight() { // :void (if rows option is set)
+		let height = this._getEditorHeight();
+		if (!height) return;
+		height = `${height}em`; // ex: 11.349em
 		this.shadowRoot.querySelector('.CodeMirror-scroll').style.minHeight = height;
 		if (!this.scrollable) return;
 		this.shadowRoot.querySelector('.CodeMirror').style.height = height;
+	}
+	_setHostMinHeight() { // :void (attempt to tame the vertical shift shock)
+		let height = 0;
+		const eHeight = this._getEditorHeight();
+		const tHeight = this._getTitlebarHeight();
+		if (!eHeight && !tHeight) return;
+		if (!!eHeight) height += eHeight * EDITOR_FONT_SIZE; // em to px (ex: 11.349em * 11.5px);
+		if (!!tHeight) height += tHeight;
+		height = Math.floor(height); // round down convert to int
+		height = `${height}px` // ex: 162px
+		this.style.minHeight = height; // root elm isn't available in time
 	}
 	_setLabel() { // :void
 		if (this.label) return; // custom label
@@ -290,7 +314,7 @@ export class RbCode extends FormControl(RbBase()) {
 			// smartIndent:     true, // default
 			// tabSize:         4, // default
 		});
-		this._setHeight();
+		this._setEditorHeight();
 		this._attachEditorEvents();
 		// console.log(this.editor);
 		// console.log(CodeMirror.modes);
