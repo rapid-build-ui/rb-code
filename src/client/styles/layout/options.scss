@@ -14,3 +14,21 @@
 		opacity: .7;
 	};
 }
+.form-control.right {
+	text-align: right;
+	.CodeMirror { text-align: right; }
+	.label {
+		flex-direction: row-reverse;
+		label ~ .actions {
+			margin-left: 0;
+			margin-right: 8px;
+		}
+		.actions {
+			flex-direction: row-reverse;
+			> * ~ * {
+				margin-left: 0;
+				margin-right: 8px;
+			}
+		}
+	}
+}

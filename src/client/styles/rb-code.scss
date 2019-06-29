@@ -2,6 +2,7 @@
  * RB-CODE STYLES
  *****************/
 @import 'sass/functions.scss';
+@import 'sass/variables.scss';
 @import 'sass/fonts.scss';
 @import 'sass/palette.scss';
 
@@ -12,6 +13,8 @@
 @import 'layout/label.scss';
 @import 'layout/textarea.scss';
 @import 'layout/editor.scss';
+@import 'layout/focus-line.scss';
+@import 'layout/subtext.scss';
 @import 'layout/scrollbar.scss';
 @import 'layout/options.scss';
 @import 'layout/rapid-theme.scss';

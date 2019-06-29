@@ -1,10 +1,11 @@
 <div
+	?disabled="${props.disabled}"
 	?readonly="${props.readonly}"
 	class="
-		rb-code
+		form-control
 		${props.kind}
-		theme-${props.theme}
 		mode-${props.mode}
+		theme-${props.theme}
 		${props.right ? 'right' : ''}
 		${props.inline ? 'inline' : ''}
 		${this._active ? 'active' : ''}

@@ -61,6 +61,8 @@ export class RbCode extends FormControl(RbBase()) {
 			...super.props,
 			rows: props.number,
 			label: props.string,
+			right: props.boolean,
+			inline: props.boolean,
 			subtext: props.string,
 			placeholder: props.string,
 			kind: Object.assign({}, props.string, { // TODO: maybe
@@ -146,7 +148,7 @@ export class RbCode extends FormControl(RbBase()) {
 			if (!!eHeight) height += eHeight * eFontSize; // em to px (ex: 11.349em * 11.5px);
 			if (!!tHeight) height += tHeight;
 			height = Math.floor(height); // round down convert to int
-			if (this.theme === 'rapid') height += 3; // focus bar
+			if (this.theme === 'rapid') height += 2; // focus line
 			height = `${height}px` // ex: 162px
 			this.style.minHeight = height; // this is host elm
 		}
@@ -334,16 +336,16 @@ export class RbCode extends FormControl(RbBase()) {
 	 *********/
 	_initEditor() { // :void
 		this.editor = CodeMirror.fromTextArea(this.rb.elms.textarea, {
+			cursorBlinkRate: this._getCursorBlinkRate(),
 			indentUnit:      4, // uses 2 spaces without smartIndent
 			indentWithTabs:  true,
 			lineNumbers:     this.lineNumbers,
 			lineWrapping:    this.lineWrapping,
 			mode:            this._mode.config,
 			readOnly:        this._getReadonly(),
-			cursorBlinkRate: this._getCursorBlinkRate(),
+			tabindex:        this.disabled ? -1 : 1,
 			theme:           this._getEditorTheme(),
 			viewportMargin:  Infinity, // monitor performance (maybe 50)
-			tabindex:        this.disabled ? -1 : 1,
 			// smartIndent:     true, // default
 			// tabSize:         4, // default
 		});

@@ -1,0 +1,41 @@
+/*************
+ * FOCUS LINE (currently only for rapid theme)
+ *************/
+.form-control {
+	.focus-line {
+		width: 100%;
+		height: 2px;
+		display: block;
+		box-sizing: border-box;
+		transform-origin: center top;
+		border-top-width: 1px;
+		border-top-style: solid;
+		border-top-color: mapGet($palette, trolleyGrey);
+	}
+
+	@keyframes focus-line {
+		from { transform: scaleX(0); }
+		to   { transform: scaleX(1); }
+	}
+
+	&:not(.active):not(.invalid) {
+		.CodeMirror:hover ~ .focus-line,
+		.label.hover:hover ~ .editor-wrap .focus-line, {
+			border-top-color: mapGet($palette, black);
+		}
+	}
+
+	&.active {
+		.focus-line {
+			border-top-width: 2px;
+			animation-name: focus-line;
+			animation-duration: .18s;
+			border-top-color: mapGet($palette, honoluluBlue);
+		}
+	}
+	&.invalid {
+		.focus-line {
+			border-top-color: mapGet($palette, jasper);
+		}
+	}
+}

@@ -7,7 +7,7 @@
 
 /* Invalid
  **********/
-.rb-code.invalid {
+.invalid {
 	label,
 	.subtext {
 		color: mapGet($palette, jasper);
@@ -22,7 +22,7 @@
 .readonly {
 	color: mapGet($palette, silverChalice);
 }
-.rb-code .CodeMirror-placeholder {
+.form-control .CodeMirror-placeholder {
 	opacity: .8;
 	color: mapGet($palette, silverChalice);
 }
