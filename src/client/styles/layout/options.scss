@@ -1,17 +1,16 @@
 /**********
  * OPTIONS
  **********/
-.rb-code.readonly {
-	.label::before {
-		position: absolute; // to .label
-		top: 100%;
+[readonly] {
+	.readonly {
+		position: absolute; // to .editor-wrap
+		top: 0;
 		right: 4px;
 		z-index: 2;
 		opacity: 0;
 		transition: opacity .8s;
-		content: 'readonly';
 	}
-	&:hover .label::before {
+	&:hover .readonly {
 		opacity: .7;
 	};
 }

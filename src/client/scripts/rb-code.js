@@ -12,8 +12,7 @@ import './generated/editor.js';
 import '../../rb-button/scripts/rb-button.js';
 import '../../rb-popover/scripts/rb-popover.js';
 // true if phone or tablet (TODO: move to base and improve)
-const IS_MOBILE        = !Type.is.undefined(window.orientation);
-const EDITOR_FONT_SIZE = 11.5; // if changed, must also change in fonts.scss
+const IS_MOBILE = !Type.is.undefined(window.orientation);
 
 export class RbCode extends FormControl(RbBase()) {
 	/* Lifecycle
@@ -26,6 +25,7 @@ export class RbCode extends FormControl(RbBase()) {
 	connectedCallback() { // :void
 		super.connectedCallback && super.connectedCallback();
 		this._mode = this.mode;
+		this._setEditorFontSize();
 		this._setLabel();
 		this._setHostMinHeight();
 		setTimeout(() => {
@@ -49,6 +49,8 @@ export class RbCode extends FormControl(RbBase()) {
 		Object.assign(this.rb.elms, {
 			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
+			titlebar:    this.shadowRoot.querySelector('.label'),
+			label:       this.shadowRoot.querySelector('label')
 		});
 		this._attachEvents();
 	}
@@ -104,7 +106,8 @@ export class RbCode extends FormControl(RbBase()) {
 					if (Type.is.undefined(val)) return val;
 					return String(val);
 				}
-			})
+			}),
+			_editorReady: props.boolean
 		};
 	}
 
@@ -179,16 +182,24 @@ export class RbCode extends FormControl(RbBase()) {
 		// if mobile then 'nocursor' (prevents keyboard from popping up)
 		return this.readonly ? IS_MOBILE ? 'nocursor' : true : false;
 	}
+	_getEditorTheme() { // string
+		if (this.theme !== 'rapid') return this.theme;
+		return 'default';
+	}
 	_getEditorHeight() { // :float | null (becomes em unit)
 		if (!this.rows) return null;
 		if (this.rows <= 1) return null;
-		const height = this.rows * 1.8915;
+		let height = this.theme === 'rapid' ? 1.47 : 1.91;
+		height = this.rows * height;
 		return height;
 	}
 	_getTitlebarHeight() { // :float | null (becomes px unit)
 		const hasTitleBar = !!this.label.trim() || !!this.actions.length;
 		if (!hasTitleBar) return null;
-		return 31.5; // hard coded, titlebar isn't available in time
+		return this.theme === 'rapid' ? 22.5 : 31.5; // hard coded, titlebar isn't available in time
+	}
+	_setEditorFontSize() { // :void (if changed, must also change in fonts.scss and rapid-theme.scss)
+		this.editorFontSize = this.theme === 'rapid' ? 16 : 11.5;
 	}
 	_setEditorHeight() { // :void (if rows option is set)
 		let height = this._getEditorHeight();
@@ -203,9 +214,10 @@ export class RbCode extends FormControl(RbBase()) {
 		const eHeight = this._getEditorHeight();
 		const tHeight = this._getTitlebarHeight();
 		if (!eHeight && !tHeight) return;
-		if (!!eHeight) height += eHeight * EDITOR_FONT_SIZE; // em to px (ex: 11.349em * 11.5px);
+		if (!!eHeight) height += eHeight * this.editorFontSize; // em to px (ex: 11.349em * 11.5px);
 		if (!!tHeight) height += tHeight;
 		height = Math.floor(height); // round down convert to int
+		if (this.theme === 'rapid') height += 3; // focus bar
 		height = `${height}px` // ex: 162px
 		this.style.minHeight = height; // root elm isn't available in time
 	}
@@ -218,10 +230,14 @@ export class RbCode extends FormControl(RbBase()) {
 	/* Event Management
 	 *******************/
 	_attachEvents() { // :void
-		const { clearBtn, copyPopover, textarea } = this.rb.elms;
+		const { clearBtn, copyPopover, label, textarea } = this.rb.elms;
 		if (clearBtn) clearBtn.onclick = this._clear.bind(this);
 		if (copyPopover) copyPopover.onclick = this._copy.bind(this);
 		this.rb.events.add(textarea, 'focus', this._onfocusTextarea);
+		if (!label) return;
+		this.rb.events.add(label, 'click',      this._onLabelEvent);
+		this.rb.events.add(label, 'mouseenter', this._onLabelEvent);
+		this.rb.events.add(label, 'mouseleave', this._onLabelEvent);
 	}
 	_clear(evt) { // :void
 		this.editor.setValue('');
@@ -240,14 +256,24 @@ export class RbCode extends FormControl(RbBase()) {
 		if (this._skipFocus) return this._skipFocus = false;
 		this.editor.focus();
 	}
+	_onLabelEvent(evt) { // :void
+		switch (evt.type) {
+			case 'click':
+				this._onfocusTextarea(evt);
+				break;
+			case 'mouseenter':
+				this.rb.elms.titlebar.classList.add('hover');
+				break;
+			case 'mouseleave':
+				this.rb.elms.titlebar.classList.remove('hover');
+				break;
+		}
+	}
 
 	/* Observer
 	 ***********/
 	updating(prevProps) { // :void
 		if (prevProps.value === this.value) return;
-		// console.log('UPDATING CODE');
-		// console.log(prevProps.value);
-		// console.log(this.value);
 		this.rb.events.emit(this, 'value-changed', {
 			detail: { value: this.value }
 		});
@@ -309,13 +335,23 @@ export class RbCode extends FormControl(RbBase()) {
 			mode:            this._mode.config,
 			readOnly:        this._getReadonly(),
 			cursorBlinkRate: this._getCursorBlinkRate(),
-			theme:           this.theme,
+			theme:           this._getEditorTheme(),
 			viewportMargin:  Infinity, // monitor performance (maybe 50)
+			tabindex:        this.disabled ? -1 : 1,
 			// smartIndent:     true, // default
 			// tabSize:         4, // default
 		});
 		this._setEditorHeight();
 		this._attachEditorEvents();
+		this._editorReady = true;
+		// this.rb.elms.label.focus();
+		// this.state.editor.ready = true;
+		// console.log(this.state.editor.ready);
+		// this.triggerUpdate();
+		// const hScroll = this.shadowRoot.querySelector('.CodeMirror-hscrollbar');
+		// this.rb.events.add(hScroll, 'scroll', evt => {
+		// 	console.log(evt);
+		// });
 		// console.log(this.editor);
 		// console.log(CodeMirror.modes);
 		// console.log(CodeMirror.defaults);

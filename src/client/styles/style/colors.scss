@@ -12,18 +12,18 @@
 	.subtext {
 		color: mapGet($palette, jasper);
 	}
-	.label {
+	&:not(.theme-rapid) .label {
 		border-bottom: 1px solid mapGet($palette, jasper);
 	}
 }
 
 /* Options
  **********/
-.rb-code .CodeMirror-placeholder {
-	opacity: .8;
+.readonly {
 	color: mapGet($palette, silverChalice);
 }
-.rb-code.readonly .label::before {
+.rb-code .CodeMirror-placeholder {
+	opacity: .8;
 	color: mapGet($palette, silverChalice);
 }
 

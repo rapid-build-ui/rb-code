@@ -64,7 +64,8 @@ const Themes = [
 /* Third Party Themes
  *********************/
 Themes.push(
-	'one-dark'
+	'one-dark',
+	'rapid'
 )
 
 /* Prep Themes

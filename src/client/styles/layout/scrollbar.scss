@@ -17,13 +17,13 @@
 	scrollbar-width: thin;
 	scrollbar-color: #00000080 transparent; // 1st thumb, 2nd track
 
-	// &::-webkit-scrollbar, // test
+	&::-webkit-scrollbar,
 	&::-webkit-scrollbar-thumb {
 		border-radius: 100px;
 	}
 	&::-webkit-scrollbar {
-		// width:  8px; // test
-		// height: 8px; // test
+		width:  5px; // was 8px x 8px
+		height: 5px;
 		&:hover {
 			background: #00000017;
 		}

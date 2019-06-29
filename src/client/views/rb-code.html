@@ -1,14 +1,16 @@
 <div
+	?readonly="${props.readonly}"
 	class="
 		rb-code
 		${props.kind}
 		theme-${props.theme}
 		mode-${props.mode}
+		${props.right ? 'right' : ''}
+		${props.inline ? 'inline' : ''}
 		${this._active ? 'active' : ''}
 		${this._valid ? 'valid' : 'invalid'}
-		${props.readonly ? 'readonly' : ''}
-		${!this.label.trim() && !this.actions.length ? 'no-label' : 'with-label'}
 		${props.lineNumbers ? 'with-line-numbers' : 'without-line-numbers'}
+		${!this.label.trim() && !this.actions.length ? 'no-label' : 'with-label'}
 	">
 	<div class="label">
 		${props.label
@@ -35,10 +37,20 @@
 			`)}
 		</div>
 	</div>
-	<textarea
-		tabindex="-1"
-		.value="${props.value}"
-		placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
+	<div class="editor-wrap">
+		${props.readonly
+			? html`<em class="readonly">readonly</em>`
+			: ''
+		}
+		<textarea
+			tabindex="-1"
+			.value="${props.value}"
+			placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
+		${props.theme === 'rapid' && this._editorReady
+			? html`<b class="focus-line"></b>`
+			: ''
+		}
+	</div>
 	${this._error || props.subtext
 		? html`<span class="subtext">${this._error || props.subtext}</span>`
 		: ''

@@ -1,6 +1,10 @@
 /*********
  * EDITOR
  *********/
+.editor-wrap {
+	position: relative; // for readonly and hidden textarea
+}
+
 .CodeMirror {
 	height: auto;
 	line-height: 18px;

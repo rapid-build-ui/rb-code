@@ -1,0 +1,81 @@
+/**************
+ * RAPID THEME
+ **************/
+.rb-code.theme-rapid {
+	max-width: 300px;
+
+	.label {
+		padding: 0 2px 5px 0;
+		color: mapGet($palette, paynesGrey);
+		label {
+			font-size: 15px;
+			font-weight: 600;
+			text-transform: none;
+			letter-spacing: .01em;
+		}
+	}
+	.subtext {
+		position: relative;
+		top: -1px;
+	}
+	.CodeMirror {
+		// IMPORTANT
+		// font-size also in rb-code.js if changed,
+		// must also change in js: _setEditorFontSize()
+		font-size: 16px;
+		line-height: 20px;
+		color: mapGet($palette, paynesGrey);
+		font-family: mapGet($fonts, default);
+	}
+	&.active {
+		.CodeMirror {
+			color: mapGet($palette, outerSpace);
+		}
+	}
+	// .cm-s-rapid
+	&.without-line-numbers {
+		.CodeMirror-lines { margin-left: -3px; }
+	}
+
+	/* Focus Line
+	 *************/
+	.focus-line {
+		width: 100%;
+		height: 2px;
+		display: block;
+		box-sizing: border-box;
+		transform-origin: center top; // TODO: add border-bottom and fix iOS
+		border-top-width: 1px;
+		border-top-style: solid;
+		border-top-color: mapGet($palette, trolleyGrey);
+	}
+
+	@keyframes focus-line {
+		from { transform: scaleX(0); }
+		to   { transform: scaleX(1); }
+	}
+
+	&:not(.active):not(.invalid) {
+		.label.hover:hover ~ .focus-line,
+		.CodeMirror:hover ~ .focus-line {
+			border-top-color: mapGet($palette, black);
+		}
+	}
+
+	&.active {
+		.focus-line {
+			border-top-width: 2px;
+			animation-name: focus-line;
+			animation-duration: .18s;
+			border-top-color: mapGet($palette, honoluluBlue);
+		}
+		label {
+			color: mapGet($palette, honoluluBlue);
+		}
+	}
+	&.invalid {
+		.focus-line {
+			border-top-color: mapGet($palette, jasper);
+		}
+	}
+}
