@@ -4,11 +4,14 @@
 .editor-wrap {
 	position: relative; // for readonly and hidden textarea
 }
-
 .CodeMirror {
-	height: auto;
-	line-height: 18px;
+	height: auto; // auto makes editor resize to fit content
 	text-align: left;
+}
+
+.form-control {
+	&.theme-rapid .CodeMirror { line-height: 20px; }
+	&:not(.theme-rapid) .CodeMirror { line-height: 18px; }
 }
 
 /* Theme (adjustments)

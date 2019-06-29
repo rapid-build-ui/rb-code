@@ -1,9 +1,14 @@
 /**************
  * RAPID THEME
  **************/
-.form-control.theme-rapid {
+.theme-rapid {
 	max-width: $MAX_WIDTH;
 
+	/* Layout
+	 *********/
+	.label {
+		padding: 0 2px 5px 0;
+	}
 	.subtext {
 		margin: 3px 0 0;
 		padding: 0 1px;
@@ -12,22 +17,19 @@
 		.CodeMirror-lines { margin-left: -3px; }
 	}
 
+	/* Style
+	 ********/
 	.label {
-		padding: 0 2px 5px 0;
 		color: mapGet($palette, paynesGrey);
 		label {
 			font-size: 15px;
 			font-weight: 600;
-			text-transform: none;
 			letter-spacing: .01em;
+			text-transform: none;
 		}
 	}
-	.CodeMirror {
-		// IMPORTANT (font-size also in rb-code.js if changed, must also change in js: getEditorFontSize())
-		font-size: 16px;
-		line-height: 20px;
+	&:not(.active) .CodeMirror {
 		color: mapGet($palette, paynesGrey);
-		font-family: mapGet($fonts, default);
 	}
 	&.active {
 		.CodeMirror {

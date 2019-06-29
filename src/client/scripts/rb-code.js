@@ -137,7 +137,7 @@ export class RbCode extends FormControl(RbBase()) {
 			return this.theme === 'rapid' ? 22.5 : 31.5; // hard coded, titlebar isn't available in time
 		}
 		const getEditorFontSize = () => { // :float
-			return this.theme === 'rapid' ? 16 : 11.5; // if changed must also change in fonts.scss and rapid-theme.scss
+			return this.theme === 'rapid' ? 16 : 11.5; // if changed must also change in fonts.scss
 		}
 		const setHostMinHeight = () => { // :void
 			let height = 0;
