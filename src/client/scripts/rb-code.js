@@ -25,9 +25,8 @@ export class RbCode extends FormControl(RbBase()) {
 	connectedCallback() { // :void
 		super.connectedCallback && super.connectedCallback();
 		this._mode = this.mode;
-		this._setEditorFontSize();
 		this._setLabel();
-		this._setHostMinHeight();
+		this._shiftShockFix();
 		setTimeout(() => {
 			this._initValue();
 			this._clearHostContent();
@@ -127,6 +126,33 @@ export class RbCode extends FormControl(RbBase()) {
 		this.value = value;
 	}
 
+	/* Shift Shock Fix
+	 ******************/
+	_shiftShockFix() { // :void (runs in connectedCallback - fixes vertical shift shock if rows option is set)
+		const getTitlebarHeight = () => { // :float | null (becomes px unit)
+			const hasTitleBar = !!this.label.trim() || !!this.actions.length;
+			if (!hasTitleBar) return null;
+			return this.theme === 'rapid' ? 22.5 : 31.5; // hard coded, titlebar isn't available in time
+		}
+		const getEditorFontSize = () => { // :float
+			return this.theme === 'rapid' ? 16 : 11.5; // if changed must also change in fonts.scss and rapid-theme.scss
+		}
+		const setHostMinHeight = () => { // :void
+			let height = 0;
+			const eHeight = this._getEditorHeight();
+			const tHeight = getTitlebarHeight();
+			if (!eHeight && !tHeight) return;
+			const eFontSize = getEditorFontSize();
+			if (!!eHeight) height += eHeight * eFontSize; // em to px (ex: 11.349em * 11.5px);
+			if (!!tHeight) height += tHeight;
+			height = Math.floor(height); // round down convert to int
+			if (this.theme === 'rapid') height += 3; // focus bar
+			height = `${height}px` // ex: 162px
+			this.style.minHeight = height; // this is host elm
+		}
+		setHostMinHeight();
+	}
+
 	/* Getters and Setters
 	 **********************/
 	get _mode() { // :mode<object>
@@ -193,14 +219,6 @@ export class RbCode extends FormControl(RbBase()) {
 		height = this.rows * height;
 		return height;
 	}
-	_getTitlebarHeight() { // :float | null (becomes px unit)
-		const hasTitleBar = !!this.label.trim() || !!this.actions.length;
-		if (!hasTitleBar) return null;
-		return this.theme === 'rapid' ? 22.5 : 31.5; // hard coded, titlebar isn't available in time
-	}
-	_setEditorFontSize() { // :void (if changed, must also change in fonts.scss and rapid-theme.scss)
-		this.editorFontSize = this.theme === 'rapid' ? 16 : 11.5;
-	}
 	_setEditorHeight() { // :void (if rows option is set)
 		let height = this._getEditorHeight();
 		if (!height) return;
@@ -208,18 +226,6 @@ export class RbCode extends FormControl(RbBase()) {
 		this.shadowRoot.querySelector('.CodeMirror-scroll').style.minHeight = height;
 		if (!this.scrollable) return;
 		this.shadowRoot.querySelector('.CodeMirror').style.height = height;
-	}
-	_setHostMinHeight() { // :void (attempt to tame the vertical shift shock)
-		let height = 0;
-		const eHeight = this._getEditorHeight();
-		const tHeight = this._getTitlebarHeight();
-		if (!eHeight && !tHeight) return;
-		if (!!eHeight) height += eHeight * this.editorFontSize; // em to px (ex: 11.349em * 11.5px);
-		if (!!tHeight) height += tHeight;
-		height = Math.floor(height); // round down convert to int
-		if (this.theme === 'rapid') height += 3; // focus bar
-		height = `${height}px` // ex: 162px
-		this.style.minHeight = height; // root elm isn't available in time
 	}
 	_setLabel() { // :void
 		if (this.label) return; // custom label

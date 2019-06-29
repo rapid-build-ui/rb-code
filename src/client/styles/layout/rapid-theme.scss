@@ -21,7 +21,7 @@
 	.CodeMirror {
 		// IMPORTANT
 		// font-size also in rb-code.js if changed,
-		// must also change in js: _setEditorFontSize()
+		// must also change in js: getEditorFontSize()
 		font-size: 16px;
 		line-height: 20px;
 		color: mapGet($palette, paynesGrey);
