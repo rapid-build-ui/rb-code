@@ -31,7 +31,7 @@ const Helper = {
 		const paths = [];
 		for (const [addon, file] of Object.entries(INCLUDE_ADDONS))
 			paths.push(`${Paths.editor.addons}/${file}`);
-		for (const _path of paths) // populate css string
+		for (const _path of paths) // populate js string
 			js += await Help.getFileContents(_path);
 		return Help.writeFile(`${Paths.dist.scripts}/addons.js`, js);
 	},
