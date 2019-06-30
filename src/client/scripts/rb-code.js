@@ -30,8 +30,8 @@ export class RbCode extends FormControl(RbBase()) {
 		setTimeout(() => {
 			this._initValue();
 			this._clearHostContent();
-			const textarea = this.shadowRoot.querySelector('textarea');
-			this.rb.elms.textarea = textarea;
+			this._setRbElmsTextarea();
+			const textarea = this.rb.elms.textarea;
 			Object.assign(this.rb.formControl, {
 				elm:      textarea,
 				focusElm: textarea
@@ -49,8 +49,9 @@ export class RbCode extends FormControl(RbBase()) {
 			clearBtn:    this.shadowRoot.getElementById('clear'),
 			copyPopover: this.shadowRoot.getElementById('copy'),
 			titlebar:    this.shadowRoot.querySelector('.label'),
-			label:       this.shadowRoot.querySelector('label')
+			label:       this.shadowRoot.querySelector('label'),
 		});
+		this._setRbElmsTextarea();
 		this._attachEvents();
 	}
 
@@ -233,6 +234,10 @@ export class RbCode extends FormControl(RbBase()) {
 		if (this.label) return; // custom label
 		if (!this.label.trim() && this.hasAttribute('label')) return; // blank label
 		this.label = this._mode.label || '';
+	}
+	_setRbElmsTextarea() { // :void (needed in case viewReady runs before connectedCallback timeout)
+		if (this.rb.elms.textarea) return;
+		this.rb.elms.textarea = this.shadowRoot.querySelector('textarea');
 	}
 
 	/* Event Management
