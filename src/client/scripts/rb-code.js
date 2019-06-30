@@ -150,6 +150,7 @@ export class RbCode extends FormControl(RbBase()) {
 			if (!!tHeight) height += tHeight;
 			height = Math.floor(height); // round down convert to int
 			if (this.theme === 'rapid') height += 2; // focus line
+			if (this.theme === 'rapid' && this.lineNumbers) height += 1; // editor top border
 			height = `${height}px` // ex: 162px
 			this.style.minHeight = height; // this is host elm
 		}

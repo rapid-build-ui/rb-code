@@ -16,6 +16,11 @@
 	&.without-line-numbers:not(.right) {
 		.CodeMirror-lines { margin-left: -3px; }
 	}
+	&.with-line-numbers {
+		.CodeMirror {
+			border-top: 1px solid mapGet($palette, platinum);
+		}
+	}
 
 	/* Style
 	 ********/
