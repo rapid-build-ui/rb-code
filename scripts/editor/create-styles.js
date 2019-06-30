@@ -4,6 +4,7 @@
 const CleanCSS       = require('clean-css');
 const Help           = require('./helpers');
 const Paths          = require('./paths');
+const INCLUDE_ADDONS = require('./include/addons');
 const INCLUDE_THEMES = require('./include/themes');
 
 /* Helpers
@@ -34,17 +35,38 @@ const Helper = {
 			css += await Help.getFileContents(_path);
 		return Help.writeFile(`${Paths.dist.styles}/themes.css`, css);
 	},
+	async createAddons() { // :Promise<void>
+		let css = '';
+		const paths = [];
+		for (const [addon, file] of Object.entries(INCLUDE_ADDONS)) {
+			if (typeof file === 'string') {
+				if (!Help.isFileType(file,'css')) continue;
+				paths.push(`${Paths.editor.addons}/${file}`);
+				continue;
+			}
+			if (!Array.isArray(file)) continue;
+			for (const _file of file) {
+				if (!Help.isFileType(_file,'css')) continue;
+				paths.push(`${Paths.editor.addons}/${_file}`);
+			}
+		}
+		for (const _path of paths) // populate css string
+			css += await Help.getFileContents(_path);
+		return Help.writeFile(`${Paths.dist.styles}/addons.css`, css);
+	},
 	minifyFiles() { // :Promise<void>
 		return Promise.all([
 			Helper._minify(`${Paths.dist.styles}/lib.css`,),
-			Helper._minify(`${Paths.dist.styles}/themes.css`)
+			Helper._minify(`${Paths.dist.styles}/themes.css`),
+			Helper._minify(`${Paths.dist.styles}/addons.css`)
 		]);
 	},
 	async concatFiles() { // :Promise<void>
 		let css = '';
 		const paths = [
 			`${Paths.dist.styles}/lib.css`,
-			`${Paths.dist.styles}/themes.css`
+			`${Paths.dist.styles}/themes.css`,
+			`${Paths.dist.styles}/addons.css`
 		]
 		for (const _path of paths)
 			css += await Help.getFileContents(_path);
@@ -53,7 +75,8 @@ const Helper = {
 	cleanup() { // :Promise<void>
 		return Promise.all([
 			Help.remove(`${Paths.dist.styles}/lib.css`),
-			Help.remove(`${Paths.dist.styles}/themes.css`)
+			Help.remove(`${Paths.dist.styles}/themes.css`),
+			Help.remove(`${Paths.dist.styles}/addons.css`)
 		]);
 	},
 	async copyToDest() { // :Promise<void>
@@ -67,7 +90,8 @@ const Helper = {
 const init = async () => { // :void
 	await Promise.all([
 		Helper.createLib(),
-		Helper.createThemes()
+		Helper.createThemes(),
+		Helper.createAddons()
 	]);
 	await Helper.minifyFiles();
 	await Helper.concatFiles();

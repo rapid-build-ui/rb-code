@@ -29,8 +29,18 @@ const Helper = {
 	async createAddons() { // :Promise<void>
 		let js = '';
 		const paths = [];
-		for (const [addon, file] of Object.entries(INCLUDE_ADDONS))
-			paths.push(`${Paths.editor.addons}/${file}`);
+		for (const [addon, file] of Object.entries(INCLUDE_ADDONS)) {
+			if (typeof file === 'string') {
+				if (!Help.isFileType(file,'js')) continue;
+				paths.push(`${Paths.editor.addons}/${file}`);
+				continue;
+			}
+			if (!Array.isArray(file)) continue;
+			for (const _file of file) {
+				if (!Help.isFileType(_file,'js')) continue;
+				paths.push(`${Paths.editor.addons}/${_file}`);
+			}
+		}
 		for (const _path of paths) // populate js string
 			js += await Help.getFileContents(_path);
 		return Help.writeFile(`${Paths.dist.scripts}/addons.js`, js);

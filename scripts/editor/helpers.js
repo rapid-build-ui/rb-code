@@ -1,6 +1,7 @@
 /*****************
  * EDITOR HELPERS
  *****************/
+const path       = require('path');
 const fs         = require('fs');
 const fse        = require('fs-extra');
 const fsPromises = fs.promises;
@@ -14,6 +15,10 @@ const Helpers = {
 	async getFileContents(_path) { // :fileContents<string>
 		const file = await fsPromises.readFile(_path); // :Buffer
 		return file.toString();
+	},
+	isFileType(filePath, ext) { // :boolean
+		const extname = path.extname(filePath).replace('.','').toLowerCase();
+		return extname === ext;
 	},
 	mkdir(_path) { // :Promise<void>
 		return fsPromises.mkdir(_path, { recursive: true });
