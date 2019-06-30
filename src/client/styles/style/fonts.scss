@@ -4,6 +4,7 @@
 .form-control {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: none; // fixes iOS from randomly showing large text
 }
 
 /* Font Family
