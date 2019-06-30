@@ -69,10 +69,14 @@ export class RbCode extends FormControl(RbBase()) {
 			kind: Object.assign({}, props.string, { // TODO: maybe
 				default: 'default'
 			}),
-			lineNumbers: Object.assign({}, props.boolean, {
-				deserialize: Converter.valueless
+			nowrap: Object.assign({}, props.boolean, {
+				default: true,
+				deserialize(val) {
+					if (!Type.is.string(val)) return true;
+					return !/^false$/i.test(val.trim());
+				}
 			}),
-			lineWrapping: Object.assign({}, props.boolean, {
+			lineNumbers: Object.assign({}, props.boolean, {
 				deserialize: Converter.valueless
 			}),
 			mode: Object.assign({}, props.string, {
@@ -346,7 +350,7 @@ export class RbCode extends FormControl(RbBase()) {
 			indentUnit:      4, // uses 2 spaces without smartIndent
 			indentWithTabs:  true,
 			lineNumbers:     this.lineNumbers,
-			lineWrapping:    this.lineWrapping,
+			lineWrapping:    !this.nowrap,
 			mode:            this._mode.config,
 			readOnly:        this._getReadonly(),
 			tabindex:        this.disabled ? -1 : 1,
