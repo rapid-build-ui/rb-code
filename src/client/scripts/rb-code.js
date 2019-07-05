@@ -9,6 +9,7 @@ import View                    from '../../rb-base/scripts/public/view/directive
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
 import './generated/editor.js';
+import '../../rb-icon/scripts/rb-icon.js';
 import '../../rb-button/scripts/rb-button.js';
 import '../../rb-popover/scripts/rb-popover.js';
 // true if phone or tablet (TODO: move to base and improve)
