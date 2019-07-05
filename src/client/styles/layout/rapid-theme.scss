@@ -1,0 +1,47 @@
+/**************
+ * RAPID THEME
+ **************/
+.theme-rapid {
+	max-width: $MAX_WIDTH;
+
+	/* Layout
+	 *********/
+	.label {
+		padding: 0 2px 5px 0;
+	}
+	.subtext {
+		margin: 3px 0 0;
+		padding: 0 1px;
+	}
+	&.without-line-numbers:not(.right) {
+		.CodeMirror-lines { margin-left: -3px; }
+	}
+	&.with-line-numbers {
+		.CodeMirror {
+			border-top: 1px solid mapGet($palette, platinum);
+		}
+	}
+
+	/* Style
+	 ********/
+	.label {
+		color: mapGet($palette, paynesGrey);
+		label {
+			font-size: 15px;
+			font-weight: 600;
+			letter-spacing: .01em;
+			text-transform: none;
+		}
+	}
+	&:not(.active) .CodeMirror {
+		color: mapGet($palette, paynesGrey);
+	}
+	&.active {
+		.CodeMirror {
+			color: mapGet($palette, outerSpace);
+		}
+		&:not(.invalid) label {
+			color: mapGet($palette, honoluluBlue);
+		}
+	}
+}

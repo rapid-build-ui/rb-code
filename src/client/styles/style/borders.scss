@@ -1,0 +1,23 @@
+/**********
+ * BORDERS
+ **********/
+:host {
+	border-radius: 5px;
+}
+.form-control {
+	border-radius: inherit;
+	.label {
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+	}
+	.editor-wrap, .CodeMirror {
+		border-bottom-left-radius: inherit;
+		border-bottom-right-radius: inherit;
+	}
+	&.no-label {
+		.editor-wrap, .CodeMirror {
+			border-top-left-radius: inherit;
+			border-top-right-radius: inherit;
+		}
+	}
+}

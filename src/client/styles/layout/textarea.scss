@@ -1,0 +1,31 @@
+/******************
+ * HIDDEN TEXTAREA (trick to copy hidden textarea)
+ ******************/
+textarea {
+	position: absolute; // to root
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	border-color: transparent; // can't copy with border none
+	display: block !important; // !important because codemirror inlines display none
+}
+
+/* Testing (uncomment to see textarea)
+ **********/
+// textarea {
+// 	z-index: 1;
+// 	display: block !important;
+// 	opacity: 1;
+// 	border-color: initial;
+// 	top: 105%;
+// 	height: 100%;
+// 	// width: 100%;
+// 	width: 50%;
+// 	left: auto;
+// 	right: 0;
+// }

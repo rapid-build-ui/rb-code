@@ -1,0 +1,109 @@
+/********
+ * FONTS
+ ********/
+.form-control {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: none; // fixes iOS from randomly showing large text
+}
+
+/* Font Family
+ **************/
+.label,
+.subtext,
+.readonly,
+.form-control .CodeMirror-placeholder {
+	font-family: mapGet($fonts, default);
+}
+.form-control.theme-rapid .CodeMirror {
+	font-family: mapGet($fonts, default);
+}
+.form-control:not(.theme-rapid) .CodeMirror {
+	font-family: mapGet($fonts, monospaced);
+}
+
+/* Font Size & Other Props
+ **************************/
+.form-control {
+	// IMPORTANT!!
+	// font-size also in rb-code.js if changed,
+	// must also change in js: getEditorFontSize()
+	&.theme-rapid .CodeMirror { font-size: 16px; }
+	&:not(.theme-rapid) .CodeMirror { font-size: 11.5px; }
+}
+label {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .5px;
+	text-transform: uppercase;
+}
+.actions {
+	font-size: 14.5px;
+}
+.subtext {
+	font-size: 13px;
+	font-weight: 400;
+}
+.readonly {
+	font-size: 12px;
+	font-weight: 700;
+	font-style: normal;
+	letter-spacing: .1px;
+}
+.form-control .CodeMirror {
+	font-weight: 400;
+}
+.form-control .CodeMirror-placeholder {
+	font-size: 13px;
+	font-weight: 400;
+	font-style: italic;
+	letter-spacing: .5px;
+}
+
+/* Themes
+ *********/
+.theme-3024-day:not(.mode-text),
+.theme-3024-night:not(.mode-text),
+.theme-abcdef:not(.mode-text),
+.theme-ambiance:not(.mode-text),
+.theme-base16-dark:not(.mode-text),
+.theme-base16-light:not(.mode-text),
+.theme-bespin,
+.theme-darcula,
+.theme-duotone-dark,
+.theme-duotone-light.mode-text,
+.theme-gruvbox-dark,
+.theme-hopscotch:not(.mode-text),
+.theme-icecoder,
+.theme-isotope:not(.mode-text),
+.theme-lesser-dark:not(.mode-text),
+.theme-liquibyte:not(.mode-text),
+.theme-lucario:not(.mode-text),
+.theme-mbo:not(.mode-text),
+.theme-mdn-like,
+.theme-midnight:not(.mode-text),
+.theme-monokai:not(.mode-text),
+.theme-night:not(.mode-text),
+.theme-nord:not(.mode-text),
+.theme-oceanic-next:not(.mode-text),
+.theme-one-dark,
+.theme-panda-syntax:not(.mode-text),
+.theme-paraiso-dark,
+.theme-paraiso-light:not(.mode-text),
+.theme-pastel-on-dark,
+.theme-railscasts:not(.mode-text),
+.theme-seti:not(.mode-text),
+.theme-shadowfox,
+.theme-solarized:not(.mode-text),
+.theme-the-matrix:not(.mode-text),
+.theme-tomorrow-night-bright:not(.mode-text),
+.theme-tomorrow-night-eighties:not(.mode-text),
+.theme-twilight:not(.mode-text),
+.theme-vibrant-ink:not(.mode-text),
+.theme-yeti,
+.theme-yonce:not(.mode-text),
+.theme-zenburn:not(.mode-text) {
+	.CodeMirror {
+		font-weight: 700;
+	}
+}

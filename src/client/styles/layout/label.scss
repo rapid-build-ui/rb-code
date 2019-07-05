@@ -1,0 +1,52 @@
+/********
+ * LABEL
+ ********/
+.label {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	margin: 0;
+	padding: 5px 9px 8px 8px;
+	min-height: 17.5px; // copy icon height, prevents shift shock
+	line-height: 16.5px;
+
+	/* Shared
+	 *********/
+	> * {
+		flex: auto; // grow items to container width
+	}
+
+	/* Label
+	 ********/
+	label {
+		margin: 0;
+		padding: 0;
+		flex-grow: 0;
+		align-self: flex-end;
+		word-break: break-all;
+		transition: color .18s;
+		~ .actions {
+			margin-left: 8px;
+		}
+	}
+
+	/* Actions
+	 **********/
+	.actions {
+		display: flex;
+		justify-content: flex-end;
+		> * {
+			position: relative;
+			top: 1px;
+			~ * {
+				margin-left: 8px;
+			}
+		}
+	}
+}
+
+/* No Titlebar (label and actions)
+ **************/
+.no-label .label {
+	display: none;
+}

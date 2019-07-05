@@ -1,0 +1,195 @@
+/*********
+ * COLORS
+ *********/
+.subtext {
+	color: mapGet($palette, lightSlateGray);
+}
+
+/* Invalid
+ **********/
+.invalid {
+	label,
+	.subtext {
+		color: mapGet($palette, jasper);
+	}
+	&:not(.theme-rapid) .label {
+		border-bottom: 1px solid mapGet($palette, jasper);
+	}
+}
+
+/* Options
+ **********/
+.readonly {
+	color: mapGet($palette, silverChalice);
+}
+.form-control .CodeMirror-placeholder {
+	opacity: .8;
+	color: mapGet($palette, silverChalice);
+}
+
+/* Light Themes (label border and color)
+ ***************/
+.theme-default,
+.theme-3024-day,
+.theme-base16-light,
+.theme-duotone-light,
+.theme-eclipse,
+.theme-elegant,
+.theme-idea,
+.theme-mdn-like,
+.theme-neat,
+.theme-neo,
+.theme-paraiso-light,
+.theme-ssms,
+.theme-ttcn,
+.theme-xq-light,
+.theme-yeti {
+	.label {
+		color: mapGet($palette, paynesGrey);
+		border-bottom: 1px solid mapGet($palette, gainsboro);
+	}
+}
+.theme-solarized {
+	.label {
+		color: mapGet($palette, paynesGrey);
+		box-shadow: inset 7px 0 12px -6px mapGet($palette, black); // from solarized.css
+	}
+}
+
+/* Light Themes (label bg)
+ ***************/
+.theme-default,
+.theme-eclipse,
+.theme-elegant,
+.theme-idea,
+.theme-mdn-like,
+.theme-neat,
+.theme-neo,
+.theme-ssms,
+.theme-ttcn,
+.theme-xq-light {
+	.label { background: mapGet($palette, whiteSmoke); }
+}
+.theme-3024-day,
+.theme-base16-light,
+.theme-duotone-light,
+.theme-solarized {
+	.label { background: mapGet($palette, antiFlashWhite); }
+}
+.theme-paraiso-light {
+	.label { background: mapGet($palette, pastelGray); }
+}
+.theme-yeti {
+	.label { background: mapGet($palette, lightGray); }
+}
+
+/* Dark Themes (label border and color)
+ **************/
+.theme-3024-night,
+.theme-abcdef,
+.theme-ambiance,
+.theme-base16-dark,
+.theme-bespin,
+.theme-blackboard,
+.theme-cobalt,
+.theme-colorforth,
+.theme-darcula,
+.theme-dracula,
+.theme-duotone-dark,
+.theme-erlang-dark,
+.theme-gruvbox-dark,
+.theme-hopscotch,
+.theme-icecoder,
+.theme-isotope,
+.theme-lesser-dark,
+.theme-liquibyte,
+.theme-lucario,
+.theme-material,
+.theme-mbo,
+.theme-midnight,
+.theme-monokai,
+.theme-night,
+.theme-nord,
+.theme-oceanic-next,
+.theme-one-dark,
+.theme-panda-syntax,
+.theme-paraiso-dark,
+.theme-pastel-on-dark,
+.theme-railscasts,
+.theme-rubyblue,
+.theme-seti,
+.theme-shadowfox,
+.theme-the-matrix,
+.theme-tomorrow-night-bright,
+.theme-tomorrow-night-eighties,
+.theme-twilight,
+.theme-vibrant-ink,
+.theme-xq-dark,
+.theme-yonce,
+.theme-zenburn {
+	.label {
+		color: mapGet($palette, spanishGray);
+		border-bottom: 1px solid mapGet($palette, onyx);
+	}
+}
+
+/* Dark Themes (label bg)
+ **************/
+.theme-zenburn {
+	.label { background: mapGet($palette, blackOlive); }
+}
+.theme-lucario,
+.theme-oceanic-next {
+	.label { background: mapGet($palette, gunmetal); }
+}
+.theme-dracula,
+.theme-material,
+.theme-one-dark,
+.theme-nord {
+	.label { background: mapGet($palette, darkGunmetal); }
+}
+.theme-bespin,
+.theme-darcula,
+.theme-gruvbox-dark,
+.theme-hopscotch,
+.theme-icecoder,
+.theme-lesser-dark,
+.theme-mbo,
+.theme-monokai,
+.theme-panda-syntax,
+.theme-paraiso-dark,
+.theme-pastel-on-dark,
+.theme-railscasts,
+.theme-shadowfox {
+	.label { background: mapGet($palette, raisinBlack); }
+}
+.theme-cobalt,
+.theme-erlang-dark,
+.theme-midnight,
+.theme-rubyblue {
+	.label { background: mapGet($palette, maastrichtBlue); }
+}
+.theme-3024-night,
+.theme-abcdef,
+.theme-ambiance,
+.theme-base16-dark,
+.theme-duotone-dark,
+.theme-seti,
+.theme-yonce {
+	.label { background: mapGet($palette, licorice); }
+}
+.theme-blackboard,
+.theme-night {
+	.label { background: mapGet($palette, richBlack); }
+}
+.theme-colorforth,
+.theme-isotope,
+.theme-liquibyte,
+.theme-the-matrix,
+.theme-tomorrow-night-bright,
+.theme-tomorrow-night-eighties,
+.theme-twilight,
+.theme-vibrant-ink,
+.theme-xq-dark {
+	.label { background: mapGet($palette, black); }
+}

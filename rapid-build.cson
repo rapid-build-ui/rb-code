@@ -16,6 +16,9 @@ common:
 				scripts: [
 					'scripts/**/*.js'
 				]
+				styles: [
+					'styles/**/*.css'
+				]
 
 	extra:
 		copy:
@@ -36,6 +39,10 @@ common:
 		cacheBust: false
 		html:
 			templateCache: false
+			options:
+				ignoreCustomFragments: [
+					/\s<rb-icon|<\/rb-icon>\s/gi # ensure space between icon and surrounding text
+				]
 		css:
 			fileName:
 				'rb-code.css'

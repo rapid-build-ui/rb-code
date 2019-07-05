@@ -1,0 +1,73 @@
+/***********
+ * FOUC FIX
+ ***********/
+// White Themes
+:host(
+	:not([theme]),
+	[theme='eclipse'],
+	[theme='elegant'],
+	[theme='idea'],
+	[theme='neat'],
+	[theme='neo'],
+	[theme='rapid'],
+	[theme='solarized'],
+	[theme='ssms'],
+	[theme='ttcn'],
+	[theme='xq-light']
+) {
+	background: mapGet($palette, white);
+}
+
+// Light Themes
+:host([theme='3024-day'])                { background: #f7f7f7; }
+:host([theme='base16-light'])            { background: #f5f5f5; }
+:host([theme='duotone-light'])           { background: #faf8f5; }
+:host([theme='mdn-like'])                { background: #fdfdfd; }
+:host([theme='paraiso-light'])           { background: #e7e9db; }
+:host([theme='yeti'])                    { background: #eceae8; }
+
+// Dark Themes
+:host([theme='3024-night'])              { background: #090300; }
+:host([theme='abcdef'])                  { background: #0f0f0f; }
+:host([theme='ambiance'])                { background: #222222; }
+:host([theme='base16-dark'])             { background: #151515; }
+:host([theme='bespin'])                  { background: #28211c; }
+:host([theme='blackboard'])              { background: #0c1020; }
+:host([theme='cobalt'])                  { background: #002140; }
+:host([theme='colorforth'])              { background: #000000; }
+:host([theme='darcula'])                 { background: #2b2b2b; }
+:host([theme='dracula'])                 { background: #282a35; }
+:host([theme='duotone-dark'])            { background: #2a2733; }
+:host([theme='erlang-dark'])             { background: #002140; }
+:host([theme='gruvbox-dark'])            { background: #282828; }
+:host([theme='hopscotch'])               { background: #322931; }
+:host([theme='icecoder'])                { background: #1d1d1b; }
+:host([theme='isotope'])                 { background: #000000; }
+:host([theme='lesser-dark'])             { background: #262626; }
+:host([theme='liquibyte'])               { background: #000000; }
+:host([theme='lucario'])                 { background: #2b3e50; }
+:host([theme='material'])                { background: #263238; }
+:host([theme='mbo'])                     { background: #2c2c2c; }
+:host([theme='midnight'])                { background: #0f192a; }
+:host([theme='monokai'])                 { background: #272822; }
+:host([theme='night'])                   { background: #0a001f; }
+:host([theme='nord'])                    { background: #2e343f; }
+:host([theme='oceanic-next'])            { background: #2f4148; }
+:host([theme='one-dark'])                { background: #282c34; }
+:host([theme='panda-syntax'])            { background: #292a2b; }
+:host([theme='paraiso-dark'])            { background: #2f1e2d; }
+:host([theme='pastel-on-dark'])          { background: #2c2827; }
+:host([theme='railscasts'])              { background: #2b2b2b; }
+:host([theme='rubyblue'])                { background: #102435; }
+:host([theme='seti'])                    { background: #151718; }
+:host([theme='shadowfox'])               { background: #2a2a2e; }
+:host([theme='the-matrix'])              { background: #000000; }
+:host([theme='tomorrow-night-bright'])   { background: #000000; }
+:host([theme='tomorrow-night-eighties']) { background: #000000; }
+:host([theme='twilight'])                { background: #141414; }
+:host([theme='vibrant-ink'])             { background: #000000; }
+:host([theme='xq-dark'])                 { background: #0a001f; }
+:host([theme='yonce'])                   { background: #1c1c1c; }
+:host([theme='zenburn'])                 { background: #3f3f3f; }
+
+

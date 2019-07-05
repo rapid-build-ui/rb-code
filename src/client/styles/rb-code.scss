@@ -1,14 +1,24 @@
 /*****************
- * RB-CODE STYLES (TODO)
+ * RB-CODE STYLES
  *****************/
 @import 'sass/functions.scss';
+@import 'sass/variables.scss';
+@import 'sass/fonts.scss';
 @import 'sass/palette.scss';
 
 /* Layout
  *********/
 @import 'layout/host.scss';
-@import 'layout/code.scss';
-@import 'layout/responsive.scss';
+@import 'layout/root.scss';
+@import 'layout/label.scss';
+@import 'layout/textarea.scss';
+@import 'layout/editor.scss';
+@import 'layout/focus-line.scss';
+@import 'layout/subtext.scss';
+@import 'layout/scrollbar.scss';
+@import 'layout/options.scss';
+@import 'layout/rapid-theme.scss';
+@import 'layout/fouc.scss';
 
 /* CSS Style Variables
  **********************/
@@ -18,3 +28,6 @@
 /* Styles
  *********/
 @import 'style/common.scss';
+@import 'style/borders.scss';
+@import 'style/colors.scss';
+@import 'style/fonts.scss';

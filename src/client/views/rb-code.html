@@ -1,7 +1,62 @@
-<div class="
-	code
-	${props.kind}">
-	<slot></slot>
+<div
+	?disabled="${props.disabled}"
+	?readonly="${props.readonly}"
+	class="
+		form-control
+		${props.kind}
+		mode-${props.mode}
+		theme-${props.theme}
+		${props.right ? 'right' : ''}
+		${props.inline ? 'inline' : ''}
+		${this._active ? 'active' : ''}
+		${this._valid ? 'valid' : 'invalid'}
+		${props.lineNumbers ? 'with-line-numbers' : 'without-line-numbers'}
+		${!this.label.trim() && !this.actions.length ? 'no-label' : 'with-label'}
+	">
+	<div class="label">
+		${props.label
+			? html`<label>${props.label}</label>`
+			: ''
+		}
+		<div class="actions">
+			${props.actions.map((item, i) => html`
+				${item === 'copy' ? html`
+					<rb-popover
+						id="copy"
+						inherit-color
+						icon-kind="copy">
+						Copied! <rb-icon kind="thumbs-up"></rb-icon>
+					</rb-popover>
+				`:''}
+				${item === 'clear' && !props.readonly ? html`
+					<rb-button
+						id="clear"
+						icon-kind="times-circle"
+						text='{"inherit":"color"}'>
+					</rb-button>
+				`:''}
+			`)}
+		</div>
+	</div>
+	<div class="editor-wrap">
+		${props.readonly
+			? html`<em class="readonly">readonly</em>`
+			: ''
+		}
+		<textarea
+			tabindex="-1"
+			.value="${props.value}"
+			placeholder="${View.ifDefined(props.placeholder || undefined)}"></textarea>
+		${props.theme === 'rapid' && this._editorReady
+			? html`<b class="focus-line"></b>`
+			: ''
+		}
+	</div>
+	${this._error || props.subtext
+		? html`<span class="subtext">${this._error || props.subtext}</span>`
+		: ''
+	}
 </div>
 
+<link rel="stylesheet" href="../styles/generated/editor.css">
 <link rel="stylesheet" href="../styles/rb-code.css">

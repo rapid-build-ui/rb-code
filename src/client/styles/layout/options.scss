@@ -1,0 +1,35 @@
+/**********
+ * OPTIONS
+ **********/
+[readonly] {
+	.readonly {
+		position: absolute; // to .editor-wrap
+		top: 0;
+		right: 4px;
+		z-index: 2;
+		opacity: 0;
+		transition: opacity .8s;
+	}
+	&:hover .readonly {
+		opacity: .7;
+	};
+}
+.form-control.right {
+	margin-left: auto;
+	text-align: right;
+	.CodeMirror { text-align: right; }
+	.label {
+		flex-direction: row-reverse;
+		label ~ .actions {
+			margin-left: 0;
+			margin-right: 8px;
+		}
+		.actions {
+			flex-direction: row-reverse;
+			> * ~ * {
+				margin-left: 0;
+				margin-right: 8px;
+			}
+		}
+	}
+}

@@ -4,14 +4,16 @@
   "scripts": {
     "build-continuous": "node node_modules/@rapid-build-ui/utils/ci component continuous",
     "build-release": "node node_modules/@rapid-build-ui/utils/ci component release",
-    "bump": "node node_modules/@rapid-build-ui/utils/bump component patch",
+    "bump": "node node_modules/@rapid-build-ui/utils/bump component patch src/client/scripts/rb-code.js",
+    "build-editor": "node scripts/editor",
     "link": "cd dist/client/ && yarn link",
     "unlink": "cd dist/client/ && yarn unlink",
     "relink": "npm run link && npm run unlink && npm run link",
     "install-client": "cd src/client/ && yarn install --ignore-engines",
+    "install-editor": "cd scripts/editor/ && npm install",
     "setup": "npm run install-client && rapid-build && npm run relink"
   },
   "dependencies": {
-    "@rapid-build-ui/utils": "~0.0.11"
+    "@rapid-build-ui/utils": "~0.0.12"
   }
 }
