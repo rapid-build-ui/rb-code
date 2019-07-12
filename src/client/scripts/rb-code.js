@@ -20,7 +20,7 @@ export class RbCode extends FormControl(RbBase()) {
 	 ************/
 	constructor() {
 		super();
-		this.version = '0.0.1';
+		this.version = '0.0.2';
 		this._editorEvents = {};
 		this.rb.formControl.isTextarea = true;
 	}
