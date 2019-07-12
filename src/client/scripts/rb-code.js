@@ -1,11 +1,11 @@
 /**********
  * RB-CODE
  **********/
-import { RbBase, props, html } from '../../rb-base/scripts/rb-base.js';
+import { RbBase, props, html } from '../../base/scripts/base.js';
 import FormControl             from '../../form-control/scripts/form-control.js';
-import Type                    from '../../rb-base/scripts/public/services/type.js';
-import Converter               from '../../rb-base/scripts/public/props/converters.js';
-import View                    from '../../rb-base/scripts/public/view/directives.js';
+import Type                    from '../../base/scripts/public/services/type.js';
+import Converter               from '../../base/scripts/public/props/converters.js';
+import View                    from '../../base/scripts/public/view/directives.js';
 import Modes                   from './modes.js';
 import template                from '../views/rb-code.html';
 import './generated/editor.js';
