@@ -15,10 +15,7 @@
 .form-control .CodeMirror-placeholder {
 	font-family: mapGet($fonts, default);
 }
-.form-control.theme-rapid .CodeMirror {
-	font-family: mapGet($fonts, default);
-}
-.form-control:not(.theme-rapid) .CodeMirror {
+.form-control .CodeMirror {
 	font-family: mapGet($fonts, monospaced);
 }
 
@@ -28,7 +25,7 @@
 	// IMPORTANT!!
 	// font-size also in rb-code.js if changed,
 	// must also change in js: getEditorFontSize()
-	&.theme-rapid .CodeMirror { font-size: 16px; }
+	&.theme-rapid .CodeMirror { font-size: 12.5px; }
 	&:not(.theme-rapid) .CodeMirror { font-size: 11.5px; }
 }
 label {

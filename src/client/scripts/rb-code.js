@@ -144,7 +144,7 @@ export class RbCode extends FormControl(RbBase()) {
 			return this.theme === 'rapid' ? 22.5 : 31.5; // hard coded, titlebar isn't available in time
 		}
 		const getEditorFontSize = () => { // :float
-			return this.theme === 'rapid' ? 16 : 11.5; // if changed must also change in fonts.scss
+			return this.theme === 'rapid' ? 12.5 : 11.5; // if changed must also change in fonts.scss
 		}
 		const setHostMinHeight = () => { // :void
 			let height = 0;
@@ -225,7 +225,7 @@ export class RbCode extends FormControl(RbBase()) {
 	_getEditorHeight() { // :float | null (becomes em unit)
 		if (!this.rows) return null;
 		if (this.rows <= 1) return null;
-		let height = this.theme === 'rapid' ? 1.47 : 1.91;
+		let height = this.theme === 'rapid' ? 1.81 : 1.91;
 		height = this.rows * height;
 		return height;
 	}
